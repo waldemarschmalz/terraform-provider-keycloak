@@ -231,8 +231,13 @@ URIs for security. This client should be used for applications using the Implici
 </li>
 <li><code>client_secret</code> - (Optional) The secret for clients with an <code>access_type</code> of <code>CONFIDENTIAL</code> or <code>BEARER-ONLY</code>. This value is sensitive and
 should be treated with the same care as a password. If omitted, Keycloak will generate a GUID for this attribute.</li>
+<li><code>standard_flow_enabled</code> - (Optional) When <code>true</code>, the OAuth2 Authorization Code Grant will be enabled for this client. Defaults to <code>false</code>.</li>
+<li><code>implicit_flow_enabled</code> - (Optional) When <code>true</code>, the OAuth2 Implicit Grant will be enabled for this client. Defaults to <code>false</code>.</li>
+<li><code>direct_access_grants_enabled</code> - (Optional) When <code>true</code>, the OAuth2 Resource Owner Password Grant will be enabled for this client. Defaults to <code>false</code>.</li>
+<li><code>service_accounts_enabled</code> - (Optional) When <code>true</code>, the OAuth2 Client Credentials grant will be enabled for this client. Defaults to <code>false</code>.</li>
 <li><code>valid_redirect_uris</code> - (Optional) A list of valid URIs a browser is permitted to redirect to after a successful login or logout. Simple
-wildcards in the form of an asterisk can be used here. This attribute must be set if the value for <code>access_type</code> is either <code>CONFIDENTIAL</code> or <code>PUBLIC</code>.</li>
+wildcards in the form of an asterisk can be used here. This attribute must be set if either <code>standard_flow_enabled</code> or <code>implicit_flow_enabled</code>
+is set to <code>true</code>.</li>
 </ul>
 <h3 id="import">Import</h3>
 <p>Clients can be imported using the format <code>{{realm_id}}/{{client_keycloak_id}}</code>, where <code>client_keycloak_id</code> is the unique ID that Keycloak
