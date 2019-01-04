@@ -2,97 +2,97 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_realm/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_user/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_group/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_group_memberships/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_openid_client/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_openid_client_scope/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_openid_client_default_scopes/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_openid_user_attribute_protocol_mapper/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_openid_user_property_protocol_mapper/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_openid_group_membership_protocol_mapper/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_openid_hardcoded_claim_protocol_mapper/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_openid_full_name_protocol_mapper/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_ldap_user_federation/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_ldap_full_name_mapper/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_ldap_group_mapper/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_ldap_msad_user_account_control_mapper/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_ldap_user_attribute_mapper/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
      <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_custom_user_federation/</loc>
-     <lastmod>2018-12-19</lastmod>
+     <lastmod>2019-01-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>

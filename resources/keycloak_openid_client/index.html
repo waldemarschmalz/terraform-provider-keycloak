@@ -238,6 +238,7 @@ should be treated with the same care as a password. If omitted, Keycloak will ge
 <li><code>valid_redirect_uris</code> - (Optional) A list of valid URIs a browser is permitted to redirect to after a successful login or logout. Simple
 wildcards in the form of an asterisk can be used here. This attribute must be set if either <code>standard_flow_enabled</code> or <code>implicit_flow_enabled</code>
 is set to <code>true</code>.</li>
+<li><code>web_origins</code> - (Optional) A list of allowed CORS origins. <code>+</code> can be used to permit all valid redirect URIs, and <code>*</code> can be used to permit all origins.</li>
 </ul>
 <h3 id="import">Import</h3>
 <p>Clients can be imported using the format <code>{{realm_id}}/{{client_keycloak_id}}</code>, where <code>client_keycloak_id</code> is the unique ID that Keycloak
