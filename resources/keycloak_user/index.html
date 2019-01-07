@@ -208,6 +208,21 @@ resource &quot;keycloak_user&quot; &quot;user&quot; {
     first_name = &quot;Bob&quot;
     last_name  = &quot;Bobson&quot;
 }
+
+resource &quot;keycloak_user&quot; &quot;user_with_initial_password&quot; {
+    realm_id   = &quot;${keycloak_realm.realm.id}&quot;
+    username   = &quot;alice&quot;
+    enabled    = true
+
+    email      = &quot;alice@domain.com&quot;
+    first_name = &quot;Alice&quot;
+    last_name  = &quot;Aliceberg&quot;
+
+    initial_password {
+      value     = &quot;some password&quot;
+      temporary = true
+    }
+}
 </code></pre>
 
 <h3 id="argument-reference">Argument Reference</h3>
@@ -215,6 +230,10 @@ resource &quot;keycloak_user&quot; &quot;user&quot; {
 <ul>
 <li><code>realm_id</code> - (Required) The realm this user belongs to.</li>
 <li><code>username</code> - (Required) The unique username of this user.</li>
+<li><code>initial_password</code> (Optional) When given, the user's initial password will be set.
+   This attribute is only respected during initial user creation.</li>
+<li><code>value</code> (Required) The initial password.</li>
+<li><code>temporary</code> (Optional) If set to <code>true</code>, the initial password is set up for renewal on first use. Default to <code>false</code>.</li>
 <li><code>enabled</code> - (Optional) When false, this user cannot log in. Defaults to <code>true</code>.</li>
 <li><code>email</code> - (Optional) The user's email.</li>
 <li><code>first_name</code> - (Optional) The user's first name.</li>
