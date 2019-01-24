@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>keycloak_ldap_msad_user_account_control_mapper - Terraform Provider: Keycloak</title>
+  <title>keycloak_saml_client - Terraform Provider: Keycloak</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "keycloak_ldap_msad_user_account_control_mapper";
-    var mkdocs_page_input_path = "resources/keycloak_ldap_msad_user_account_control_mapper.md";
-    var mkdocs_page_url = "/terraform-provider-keycloak/resources/keycloak_ldap_msad_user_account_control_mapper/";
+    var mkdocs_page_name = "keycloak_saml_client";
+    var mkdocs_page_input_path = "resources/keycloak_saml_client.md";
+    var mkdocs_page_url = "/terraform-provider-keycloak/resources/keycloak_saml_client/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
@@ -78,9 +78,25 @@
                     
     <a class="" href="../keycloak_openid_client/">keycloak_openid_client</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../keycloak_saml_client/">keycloak_saml_client</a>
+    <a class="current" href="./">keycloak_saml_client</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#keycloak_saml_client">keycloak_saml_client</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#example-usage">Example Usage</a></li>
+        
+            <li><a class="toctree-l4" href="#argument-reference">Argument Reference</a></li>
+        
+            <li><a class="toctree-l4" href="#import">Import</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -122,25 +138,9 @@
                     
     <a class="" href="../keycloak_ldap_group_mapper/">keycloak_ldap_group_mapper</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">keycloak_ldap_msad_user_account_control_mapper</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#keycloak_ldap_msad_user_account_control_mapper">keycloak_ldap_msad_user_account_control_mapper</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#example-usage">Example Usage</a></li>
-        
-            <li><a class="toctree-l4" href="#argument-reference">Argument Reference</a></li>
-        
-            <li><a class="toctree-l4" href="#import">Import</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../keycloak_ldap_msad_user_account_control_mapper/">keycloak_ldap_msad_user_account_control_mapper</a>
                 </li>
                 <li class="">
                     
@@ -179,10 +179,10 @@
         
       
     
-    <li>keycloak_ldap_msad_user_account_control_mapper</li>
+    <li>keycloak_saml_client</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/mrparkers/terraform-provider-keycloak/edit/master/docs/resources/keycloak_ldap_msad_user_account_control_mapper.md"
+        <a href="https://github.com/mrparkers/terraform-provider-keycloak/edit/master/docs/resources/keycloak_saml_client.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -192,57 +192,58 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="keycloak_ldap_msad_user_account_control_mapper">keycloak_ldap_msad_user_account_control_mapper</h1>
-<p>Allows for creating and managing MSAD user account control mappers for Keycloak
-users federated via LDAP.</p>
-<p>The MSAD (Microsoft Active Directory) user account control mapper is specific
-to LDAP user federation providers that are pulling from AD, and it can propagate
-AD user state to Keycloak in order to enforce settings like expired passwords
-or disabled accounts.</p>
+                <h1 id="keycloak_saml_client">keycloak_saml_client</h1>
+<p>Allows for creating and managing Keycloak clients that use the SAML protocol.</p>
+<p>Clients are entities that can use Keycloak for user authentication. Typically,
+clients are applications that redirect users to Keycloak for authentication
+in order to take advantage of Keycloak's user sessions for SSO.</p>
 <h3 id="example-usage">Example Usage</h3>
 <pre><code class="hcl">resource &quot;keycloak_realm&quot; &quot;realm&quot; {
-    realm   = &quot;test&quot;
+    realm   = &quot;my-realm&quot;
     enabled = true
 }
 
-resource &quot;keycloak_ldap_user_federation&quot; &quot;ldap_user_federation&quot; {
-    name                    = &quot;ad&quot;
+resource &quot;keycloak_saml_client&quot; &quot;saml_client&quot; {
     realm_id                = &quot;${keycloak_realm.realm.id}&quot;
+    client_id               = &quot;test-saml-client&quot;
+    name                    = &quot;test-saml-client&quot;
 
-    username_ldap_attribute = &quot;cn&quot;
-    rdn_ldap_attribute      = &quot;cn&quot;
-    uuid_ldap_attribute     = &quot;objectGUID&quot;
-    user_object_classes     = [
-        &quot;person&quot;,
-        &quot;organizationalPerson&quot;,
-        &quot;user&quot;
-    ]
-    connection_url          = &quot;ldap://my-ad-server&quot;
-    users_dn                = &quot;dc=example,dc=org&quot;
-    bind_dn                 = &quot;cn=admin,dc=example,dc=org&quot;
-    bind_credential         = &quot;admin&quot;
-}
+    sign_documents          = false
+    sign_assertions         = true
+    include_authn_statement = true
 
-resource &quot;keycloak_ldap_msad_user_account_control_mapper&quot; &quot;msad_user_account_control_mapper&quot; {
-    realm_id                 = &quot;${keycloak_realm.realm.id}&quot;
-    ldap_user_federation_id  = &quot;${keycloak_ldap_user_federation.ldap_user_federation.id}&quot;
-    name                     = &quot;msad-user-account-control-mapper&quot;
+    signing_certificate = &quot;${file(&quot;saml-cert.pem&quot;)}&quot;
+    signing_private_key = &quot;${file(&quot;saml-key.pem&quot;)}&quot;
 }
 </code></pre>
 
 <h3 id="argument-reference">Argument Reference</h3>
 <p>The following arguments are supported:</p>
 <ul>
-<li><code>realm_id</code> - (Required) The realm that this LDAP mapper will exist in.</li>
-<li><code>ldap_user_federation_id</code> - (Required) The ID of the LDAP user federation provider to attach this mapper to.</li>
-<li><code>name</code> - (Required) Display name of this mapper when displayed in the console.</li>
-<li><code>ldap_password_policy_hints_enabled</code> - (Optional) When <code>true</code>, advanced password policies, such as password hints and previous password history will be used when writing new passwords to AD. Defaults to <code>false</code>.</li>
+<li><code>realm_id</code> - (Required) The realm this client is attached to.</li>
+<li><code>client_id</code> - (Required) The unique ID of this client, referenced in the URI during authentication and in issued tokens.</li>
+<li><code>name</code> - (Optional) The display name of this client in the GUI.</li>
+<li><code>enabled</code> - (Optional) When false, this client will not be able to initiate a login or obtain access tokens. Defaults to <code>true</code>.</li>
+<li><code>description</code> - (Optional) The description of this client in the GUI.</li>
+<li><code>include_authn_statement</code> - (Optional) When <code>true</code>, an <code>AuthnStatement</code> will be included in the SAML response.</li>
+<li><code>sign_documents</code> - (Optional) When <code>true</code>, the SAML document will be signed by Keycloak using the realm's private key.</li>
+<li><code>sign_assertions</code> - (Optional) When <code>true</code>, the SAML assertions will be signed by Keycloak using the realm's private key, and embedded within the SAML XML Auth response.</li>
+<li><code>client_signature_required</code> - (Optional) When <code>true</code>, Keycloak will expect that documents originating from a client will be signed using the certificate and/or key configured via <code>signing_certificate</code> and <code>signing_private_key</code>.</li>
+<li><code>force_post_binding</code> - (Optional) When <code>true</code>, Keycloak will always respond to an authentication request via the SAML POST Binding.</li>
+<li><code>front_channel_logout</code> - (Optional) When <code>true</code>, this client will require a browser redirect in order to perform a logout.</li>
+<li><code>name_id_format</code> - (Optional) Sets the Name ID format for the subject.</li>
+<li><code>root_url</code> - (Optional) When specified, this value is prepended to all relative URLs.</li>
+<li><code>valid_redirect_uris</code> - (Optional) When specified, Keycloak will use this list to validate given Assertion Consumer URLs specified in the authentication request.</li>
+<li><code>base_url</code> - (Optional) When specified, this URL will be used whenever Keycloak needs to link to this client.</li>
+<li><code>master_saml_processing_url</code> - (Optional) When specified, this URL will be used for all SAML requests.</li>
+<li><code>signing_certificate</code> - (Optional) If documents or assertions from the client are signed, this certificate will be used to verify the signature.</li>
+<li><code>signing_private_key</code> - (Optional) If documents or assertions from the client are signed, this private key will be used to verify the signature.</li>
 </ul>
 <h3 id="import">Import</h3>
-<p>LDAP mappers can be imported using the format <code>{{realm_id}}/{{ldap_user_federation_id}}/{{ldap_mapper_id}}</code>.
-The ID of the LDAP user federation provider and the mapper can be found within
-the Keycloak GUI, and they are typically GUIDs:</p>
-<pre><code class="bash">$ terraform import keycloak_ldap_msad_user_account_control_mapper.msad_user_account_control_mapper my-realm/af2a6ca3-e4d7-49c3-b08b-1b3c70b4b860/3d923ece-1a91-4bf7-adaf-3b82f2a12b67
+<p>Clients can be imported using the format <code>{{realm_id}}/{{client_keycloak_id}}</code>, where <code>client_keycloak_id</code> is the unique ID that Keycloak
+assigns to the client upon creation. This value can be found in the URI when editing this client in the GUI, and is typically a GUID.</p>
+<p>Example:</p>
+<pre><code class="bash">$ terraform import keycloak_saml_client.saml_client my-realm/dcbc4c73-e478-4928-ae2e-d5e420223352
 </code></pre>
               
             </div>
@@ -251,10 +252,10 @@ the Keycloak GUI, and they are typically GUIDs:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../keycloak_ldap_user_attribute_mapper/" class="btn btn-neutral float-right" title="keycloak_ldap_user_attribute_mapper">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../keycloak_openid_client_scope/" class="btn btn-neutral float-right" title="keycloak_openid_client_scope">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../keycloak_ldap_group_mapper/" class="btn btn-neutral" title="keycloak_ldap_group_mapper"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../keycloak_openid_client/" class="btn btn-neutral" title="keycloak_openid_client"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -282,10 +283,10 @@ the Keycloak GUI, and they are typically GUIDs:</p>
           <a href="https://github.com/mrparkers/terraform-provider-keycloak/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../keycloak_ldap_group_mapper/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../keycloak_openid_client/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../keycloak_ldap_user_attribute_mapper/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../keycloak_openid_client_scope/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
