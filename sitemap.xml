@@ -71,8 +71,8 @@
      <changefreq>daily</changefreq>
     </url>
     <url>
-     <loc></loc>
-     
+     <loc>https://mrparkers.github.io/terraform-provider-keycloak/resources/keycloak_saml_user_attribute_protocol_mapper/</loc>
+     <lastmod>2019-01-25</lastmod>
      <changefreq>daily</changefreq>
     </url>
     <url>
