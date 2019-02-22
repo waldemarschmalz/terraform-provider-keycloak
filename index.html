@@ -59,12 +59,24 @@
 
     <li class="toctree-l2"><a href="#keycloak-setup">Keycloak Setup</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l3" href="#client-credentials-grant-setup-recommended">Client Credentials Grant Setup (recommended)</a></li>
+        
+            <li><a class="toctree-l3" href="#password-grant-setup">Password Grant Setup</a></li>
+        
+            <li><a class="toctree-l3" href="#assigning-roles">Assigning Roles</a></li>
+        
+        </ul>
+    
 
     <li class="toctree-l2"><a href="#provider-setup">Provider Setup</a></li>
     
         <ul>
         
-            <li><a class="toctree-l3" href="#example">Example</a></li>
+            <li><a class="toctree-l3" href="#example-client-credentials">Example (client credentials)</a></li>
+        
+            <li><a class="toctree-l3" href="#example-password">Example (password)</a></li>
         
         </ul>
     
@@ -205,34 +217,62 @@ page.</p>
 <p>Please follow the <a href="https://www.terraform.io/docs/configuration/providers.html#third-party-plugins">official docs</a>
 for instructions on installing a third-party provider.</p>
 <h1 id="keycloak-setup">Keycloak Setup</h1>
-<p>Currently, this Terraform provider is configured to use the client credentials grant with
-a client configured in the master realm. You can follow the steps below to configure a
-client that the Terraform provider can use:</p>
+<p>This Terraform provider can be configured to use the <a href="https://www.oauth.com/oauth2-servers/access-tokens/client-credentials/">client credentials</a>
+or <a href="https://www.oauth.com/oauth2-servers/access-tokens/password-grant/">password</a> grant types. If you aren't
+sure which to use, the client credentials grant is recommended, as it was designed for machine to machine authentication.</p>
+<h2 id="client-credentials-grant-setup-recommended">Client Credentials Grant Setup (recommended)</h2>
 <ol>
-<li>Create a client in the master realm using the <code>openid-connect</code> protocol.</li>
-<li>Update the following client settings:<ul>
-<li>Set "Access Type" to "confidential".</li>
-<li>Set "Standard Flow Enabled" to "OFF".</li>
-<li>Set "Direct Access Grants Enabled" to "OFF".</li>
-<li>Set "Service Accounts Enabled" to "ON".</li>
-</ul>
-</li>
-<li>Go to the "Service Account Roles" tab for the client, and grant it any roles that are
-needed to manage your instance of Keycloak. The "admin" role can be assigned to effectively
-manage all Keycloak settings.</li>
+<li>Create a new client using the <code>openid-connect</code> protocol. This client can be created in the <code>master</code> realm if you would
+like to manage your entire Keycloak instance, or in any other realm if you only want to manage that realm.</li>
+<li>Update the client you just created:
+    2a. Set "Access Type" to "confidential".
+    2b. Set "Standard Flow Enabled" to "OFF".
+    2c. Set "Direct Access Grants Enabled" to "OFF"
+    2d. Set "Service Accounts Enabled" to "ON".</li>
+<li>Grant required roles for managing Keycloak via the "Service Account Roles" tab in the client you created in step 1.</li>
 </ol>
-<h1 id="provider-setup">Provider Setup</h1>
-<p>The provider needs to be configured to use the master realm client configured in the
-previous step. The following provider attributes are supported:</p>
+<h2 id="password-grant-setup">Password Grant Setup</h2>
+<p>These steps will assume that you are using the <code>admin-cli</code> client, which is already correctly configured for this type
+of authentication. Do not follow these steps if you have already followed the steps for the client credentials grant.</p>
+<ol>
+<li>Create or identify the user who's credentials will be used for authentication.</li>
+<li>Edit this user in the "Users" section of the management console and assign roles using the "Role Mappings" tab.</li>
+</ol>
+<h2 id="assigning-roles">Assigning Roles</h2>
+<p>There are many different ways that roles can be assigned to manage Keycloak. Here are a couple of common scenarios accompanied
+by suggested roles to assign. This is not an exhaustive list, and there is often more than one way to assign a particular set
+of permissions.</p>
 <ul>
-<li><code>client_id</code> (Required) - The <code>client_id</code> for the client in the master realm setup in the previous step. Defaults to the environment variable <code>KEYCLOAK_CLIENT_ID</code>.</li>
-<li><code>client_secret</code> (Required) - The secret for this client, which can be found or changed using the "Credentials" tab in the client settings. Defaults to the environment variable <code>KEYCLOAK_CLIENT_SECRET</code>.</li>
-<li><code>url</code> (Required) - The URL of the Keycloak instance, before <code>/auth/admin</code>. Defaults to the environment variable <code>KEYCLOAK_URL</code>.</li>
+<li>Managing the entire Keycloak instance: Assign the <code>admin</code> role to a user or service account within the <code>master</code> realm.</li>
+<li>Managing the entire <code>foo</code> realm: Assign the <code>realm-admin</code> client role from the <code>realm-management</code> client to a user or service
+account within the <code>foo</code> realm.</li>
+<li>Managing clients for all realms within the entire Keycloak instance: Assign the <code>create-client</code> client role from each of
+the realm clients to a user or service account within the <code>master</code> realm. For example, given a Keycloak instance with realms
+<code>master</code>, <code>foo</code>, and <code>bar</code>, assign the <code>create-client</code> client role from the clients <code>master-realm</code>, <code>foo-realm</code>, and <code>bar-realm</code>.</li>
 </ul>
-<h4 id="example">Example</h4>
+<h1 id="provider-setup">Provider Setup</h1>
+<p>The following provider attributes are supported:</p>
+<ul>
+<li><code>client_id</code> (Required) - The <code>client_id</code> for the client that was created in the "Keycloak Setup" section. Use the <code>admin-cli</code> client if you are using the password grant. Defaults to the environment variable <code>KEYCLOAK_CLIENT_ID</code>.</li>
+<li><code>url</code> (Required) - The URL of the Keycloak instance, before <code>/auth/admin</code>. Defaults to the environment variable <code>KEYCLOAK_URL</code>.</li>
+<li><code>client_secret</code> (Optional) - The secret for the client used by the provider for authentication via the client credentials grant. This can be found or changed using the "Credentials" tab in the client settings. Defaults to the environment variable <code>KEYCLOAK_CLIENT_SECRET</code>. This attribute is required when using the client credentials grant, and cannot be set when using the password grant.</li>
+<li><code>username</code> (Optional) - The username of the user used by the provider for authentication via the password grant. Defaults to environment variable <code>KEYCLOAK_USER</code>. This attribute is required when using the password grant, and cannot be set when using the client credentials grant.</li>
+<li><code>password</code> (Optional) - The password of the user used by the provider for authentication via the password grant. Defaults to environment variable <code>KEYCLOAK_PASSWORD</code>. This attribute is required when using the password grant, and cannot be set when using the client credentials grant.</li>
+<li><code>realm</code> (Optional) - The realm used by the provider for authentication. Defaults to environment variable <code>KEYCLOAK_REALM</code>, or <code>master</code> if the environment variable is not specified.</li>
+</ul>
+<h4 id="example-client-credentials">Example (client credentials)</h4>
 <pre><code class="hcl">provider &quot;keycloak&quot; {
     client_id     = &quot;terraform&quot;
     client_secret = &quot;884e0f95-0f42-4a63-9b1f-94274655669e&quot;
+    url           = &quot;http://localhost:8080&quot;
+}
+</code></pre>
+
+<h4 id="example-password">Example (password)</h4>
+<pre><code class="hcl">provider &quot;keycloak&quot; {
+    client_id     = &quot;terraform&quot;
+    username      = &quot;keycloak&quot;
+    password      = &quot;password&quot;
     url           = &quot;http://localhost:8080&quot;
 }
 </code></pre>
@@ -286,5 +326,5 @@ previous step. The following provider attributes are supported:</p>
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-01-28 19:46:26
+Build Date UTC : 2019-02-22 18:47:11
 -->
