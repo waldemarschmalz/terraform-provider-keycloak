@@ -7,19 +7,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   
-  <link rel="shortcut icon" href="./img/favicon.ico">
+  
   <title>Terraform Provider: Keycloak</title>
+  
+
+  <link rel="shortcut icon" href="./img/favicon.ico">
+
+  
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="./css/theme.css" type="text/css" />
   <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="./css/highlight.css">
   <link href="./index.css" rel="stylesheet">
+
   
-  <script src="./js/jquery-2.1.1.min.js" defer></script>
-  <script src="./js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
+  <script src="./js/jquery-2.1.1.min.js"></script>
+  <script src="./js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="./js/highlight.pack.js"></script>
+  <script src="./js/theme.js"></script>
+  <script>var base_url = '.';</script>
+  <script data-main="./mkdocs/js/search.js" src="./mkdocs/js/require.js"></script>
+
+
   
 </head>
 
@@ -30,113 +40,192 @@
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
       <div class="wy-side-nav-search">
-        <a href="./." class="icon icon-home"> Terraform Provider: Keycloak</a>
+        <a href="." class="icon icon-home"> Terraform Provider: Keycloak</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+    <input type="text" name="q" placeholder="Search docs" />
   </form>
 </div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
+        <ul class="current">
           
-            <li class="toctree-l1">
-		
-    <a class="" href="./.">Getting Started</a>
-	    </li>
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href=".">Home</a>
+        
+    </li>
+<li>
           
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Resources</span>
+            <li>
     <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_realm/">keycloak_realm</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_user/">keycloak_user</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_group/">keycloak_group</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_group_memberships/">keycloak_group_memberships</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_openid_client/">keycloak_openid_client</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_openid_client_scope/">keycloak_openid_client_scope</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_openid_client_default_scopes/">keycloak_openid_client_default_scopes</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_openid_user_attribute_protocol_mapper/">keycloak_openid_user_attribute_protocol_mapper</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_openid_user_property_protocol_mapper/">keycloak_openid_user_property_protocol_mapper</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_openid_group_membership_protocol_mapper/">keycloak_openid_group_membership_protocol_mapper</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_openid_hardcoded_claim_protocol_mapper/">keycloak_openid_hardcoded_claim_protocol_mapper</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_openid_full_name_protocol_mapper/">keycloak_openid_full_name_protocol_mapper</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_saml_client/">keycloak_saml_client</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_saml_user_attribute_protocol_mapper/">keycloak_saml_user_attribute_protocol_mapper</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_saml_user_property_protocol_mapper/">keycloak_saml_user_property_protocol_mapper</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_ldap_user_federation/">keycloak_ldap_user_federation</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_ldap_full_name_mapper/">keycloak_ldap_full_name_mapper</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_ldap_group_mapper/">keycloak_ldap_group_mapper</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_ldap_msad_user_account_control_mapper/">keycloak_ldap_msad_user_account_control_mapper</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_ldap_user_attribute_mapper/">keycloak_ldap_user_attribute_mapper</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="./resources/keycloak_custom_user_federation/">keycloak_custom_user_federation</a>
-                </li>
+    <li><span>Resources</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_custom_user_federation/">Keycloak custom user federation</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_group/">Keycloak group</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_group_memberships/">Keycloak group memberships</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_ldap_full_name_mapper/">Keycloak ldap full name mapper</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_ldap_group_mapper/">Keycloak ldap group mapper</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_ldap_msad_user_account_control_mapper/">Keycloak ldap msad user account control mapper</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_ldap_user_attribute_mapper/">Keycloak ldap user attribute mapper</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_ldap_user_federation/">Keycloak ldap user federation</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_openid_audience_protocol_mapper/">Keycloak openid audience protocol mapper</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_openid_client/">Keycloak openid client</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_openid_client_default_scopes/">Keycloak openid client default scopes</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_openid_client_optional_scopes/">Keycloak openid client optional scopes</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_openid_client_scope/">Keycloak openid client scope</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_openid_full_name_protocol_mapper/">Keycloak openid full name protocol mapper</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_openid_group_membership_protocol_mapper/">Keycloak openid group membership protocol mapper</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_openid_hardcoded_claim_protocol_mapper/">Keycloak openid hardcoded claim protocol mapper</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_openid_user_attribute_protocol_mapper/">Keycloak openid user attribute protocol mapper</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_openid_user_property_protocol_mapper/">Keycloak openid user property protocol mapper</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_realm/">Keycloak realm</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_saml_client/">Keycloak saml client</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_saml_user_attribute_protocol_mapper/">Keycloak saml user attribute protocol mapper</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_saml_user_property_protocol_mapper/">Keycloak saml user property protocol mapper</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="resources/keycloak_user/">Keycloak user</a>
+        
+    </li>
+
+        
     </ul>
-	    </li>
+<li>
           
         </ul>
       </div>
@@ -148,7 +237,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="./.">Terraform Provider: Keycloak</a>
+        <a href=".">Terraform Provider: Keycloak</a>
       </nav>
 
       
@@ -156,10 +245,14 @@
         <div class="rst-content">
           <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="./.">Docs</a> &raquo;</li>
+    <li><a href=".">Docs</a> &raquo;</li>
     
     
     <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/mrparkers/terraform-provider-keycloak" class="icon icon-github"> Edit on GitHub</a>
+        
       
     </li>
   </ul>
@@ -173,11 +266,11 @@
 
   <form id="content_search" action="search.html">
     <span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span>
-    <input name="q" id="mkdocs-search-query" type="text" class="search_input search-query ui-autocomplete-input" placeholder="Search the Docs" autocomplete="off" autofocus title="Type search term here">
+    <input name="q" id="mkdocs-search-query" type="text" class="search_input search-query ui-autocomplete-input" placeholder="Search the Docs" autocomplete="off" autofocus>
   </form>
 
-  <div id="mkdocs-search-results" class="search-results">
-    Searching...
+  <div id="mkdocs-search-results">
+    Sorry, page not found.
   </div>
 
 
@@ -195,7 +288,7 @@
 
   Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
+	  
         </div>
       </div>
 
@@ -203,18 +296,15 @@
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
+<div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
-          <a href="https://github.com/mrparkers/terraform-provider-keycloak/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+          <a href="https://github.com/mrparkers/terraform-provider-keycloak" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
       
     </span>
 </div>
-    <script>var base_url = '.';</script>
-    <script src="./js/theme.js" defer></script>
-      <script src="./search/main.js" defer></script>
 
 </body>
 </html>

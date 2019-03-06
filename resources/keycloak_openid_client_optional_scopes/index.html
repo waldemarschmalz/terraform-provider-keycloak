@@ -8,7 +8,7 @@
   
   
   
-  <title>Keycloak custom user federation - Terraform Provider: Keycloak</title>
+  <title>Keycloak openid client optional scopes - Terraform Provider: Keycloak</title>
   
 
   <link rel="shortcut icon" href="../../img/favicon.ico">
@@ -24,9 +24,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Keycloak custom user federation";
-    var mkdocs_page_input_path = "resources/keycloak_custom_user_federation.md";
-    var mkdocs_page_url = "/resources/keycloak_custom_user_federation/";
+    var mkdocs_page_name = "Keycloak openid client optional scopes";
+    var mkdocs_page_input_path = "resources/keycloak_openid_client_optional_scopes.md";
+    var mkdocs_page_url = "/resources/keycloak_openid_client_optional_scopes/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -68,21 +68,8 @@
 
         
             
-    <li class="toctree-l1 current">
-        <a class="current" href="./">Keycloak custom user federation</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#keycloak_custom_user_federation">keycloak_custom_user_federation</a></li>
-                
-                    <li><a class="toctree-l4" href="#example-usage">Example Usage</a></li>
-                
-                    <li><a class="toctree-l4" href="#argument-reference">Argument Reference</a></li>
-                
-                    <li><a class="toctree-l4" href="#import">Import</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../keycloak_custom_user_federation/">Keycloak custom user federation</a>
         
     </li>
 
@@ -158,8 +145,21 @@
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../keycloak_openid_client_optional_scopes/">Keycloak openid client optional scopes</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Keycloak openid client optional scopes</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#keycloak_openid_client_optional_scopes">keycloak_openid_client_optional_scopes</a></li>
+                
+                    <li><a class="toctree-l4" href="#example-usage">Example Usage</a></li>
+                
+                    <li><a class="toctree-l4" href="#argument-reference">Argument Reference</a></li>
+                
+                    <li><a class="toctree-l4" href="#import">Import</a></li>
+                
+            
+            </ul>
         
     </li>
 
@@ -270,7 +270,7 @@
         
       
     
-    <li>Keycloak custom user federation</li>
+    <li>Keycloak openid client optional scopes</li>
     <li class="wy-breadcrumbs-aside">
       
         
@@ -284,41 +284,63 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="keycloak_custom_user_federation">keycloak_custom_user_federation</h1>
-<p>Allows for creating and managing custom user federation providers within Keycloak.</p>
-<p>A custom user federation provider is an implementation of Keycloak's
-<a href="https://www.keycloak.org/docs/4.2/server_development/index.html#_user-storage-spi">User Storage SPI</a>.
-An example of this implementation can be found <a href="https://github.com/mrparkers/terraform-provider-keycloak/tree/master/custom-user-federation-example">here</a>.</p>
+                <h1 id="keycloak_openid_client_optional_scopes">keycloak_openid_client_optional_scopes</h1>
+<p>Allows for managing a Keycloak client's optional client scopes. An optional
+scope that is attached to a client using the OpenID Connect protocol will
+allow a client to request it using the OAuth 2.0 <code>scope</code> parameter. When
+requested, the scope's protocol mappers defined within that scope will be
+used to build claims for this client.</p>
+<p>Note that this resource attempts to be an <strong>authoritative</strong> source over
+optional scopes for a Keycloak client using the OpenID Connect protocol.
+This means that once Terraform controls a particular client's optional scopes,
+it will attempt to remove any optional scopes that were attached manually,
+and it will attempt to add any optional scopes that were detached manually.</p>
+<p>By default, Keycloak sets the <code>address</code>, <code>phone</code> and <code>offline_access</code> scopes as
+optional scopes for every newly created client. If you create this resource for
+the first time and do not include these scopes, a following run of <code>terraform plan</code>
+will result in changes.</p>
 <h3 id="example-usage">Example Usage</h3>
 <pre><code class="hcl">resource &quot;keycloak_realm&quot; &quot;realm&quot; {
-    realm   = &quot;test&quot;
+    realm   = &quot;my-realm&quot;
     enabled = true
 }
 
-resource &quot;keycloak_custom_user_federation&quot; &quot;custom_user_federation&quot; {
-    name        = &quot;custom&quot;
+resource &quot;keycloak_openid_client&quot; &quot;client&quot; {
     realm_id    = &quot;${keycloak_realm.realm.id}&quot;
-    provider_id = &quot;custom&quot;
+    client_id   = &quot;test-client&quot;
 
-    enabled     = true
+    access_type = &quot;CONFIDENTIAL&quot;
 }
+
+resource &quot;keycloak_openid_client_scope&quot; &quot;client_scope&quot; {
+    realm_id = &quot;${keycloak_realm.realm.id}&quot;
+    name     = &quot;test-client-scope&quot;
+}
+
+resource &quot;keycloak_openid_client_optional_scopes&quot; &quot;client_optional_scopes&quot; {
+    realm_id       = &quot;${keycloak_realm.realm.id}&quot;
+    client_id      = &quot;${keycloak_openid_client.client.id}&quot;
+
+    optional_scopes = [
+        &quot;address&quot;,
+        &quot;phone&quot;,
+        &quot;offline_access&quot;,
+        &quot;${keycloak_openid_client_scope.client_scope.name}&quot;
+    ]
+}
+
 </code></pre>
 
 <h3 id="argument-reference">Argument Reference</h3>
 <p>The following arguments are supported:</p>
 <ul>
-<li><code>realm_id</code> - (Required) The realm that this provider will provide user federation for.</li>
-<li><code>name</code> - (Required) Display name of the provider when displayed in the console.</li>
-<li><code>provider_id</code> - (Required) The unique ID of the custom provider, specified in the <code>getId</code> implementation for the <code>UserStorageProviderFactory</code> interface.</li>
-<li><code>enabled</code> - (Optional) When <code>false</code>, this provider will not be used when performing queries for users. Defaults to <code>true</code>.</li>
-<li><code>priority</code> - (Optional) Priority of this provider when looking up users. Lower values are first. Defaults to <code>0</code>.</li>
-<li><code>cache_policy</code> - (Optional) Can be one of <code>DEFAULT</code>, <code>EVICT_DAILY</code>, <code>EVICT_WEEKLY</code>, <code>MAX_LIFESPAN</code>, or <code>NO_CACHE</code>. Defaults to <code>DEFAULT</code>.</li>
+<li><code>realm_id</code> - (Required) The realm this client and scopes exists in.</li>
+<li><code>client_id</code> - (Required) The ID of the client to attach optional scopes to. Note that this is the unique ID of the client generated by Keycloak.</li>
+<li><code>optional_scopes</code> - (Required) An array of client scope names to attach to this client as optional scopes.</li>
 </ul>
 <h3 id="import">Import</h3>
-<p>Custom user federation providers can be imported using the format <code>{{realm_id}}/{{custom_user_federation_id}}</code>.
-The ID of the custom user federation provider can be found within the Keycloak GUI and is typically a GUID:</p>
-<pre><code class="bash">$ terraform import keycloak_custom_user_federation.custom_user_federation my-realm/af2a6ca3-e4d7-49c3-b08b-1b3c70b4b860
-</code></pre>
+<p>This resource does not support import. Instead of importing, feel free to create this resource
+as if it did not already exist on the server.</p>
               
             </div>
           </div>
@@ -326,10 +348,10 @@ The ID of the custom user federation provider can be found within the Keycloak G
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../keycloak_group/" class="btn btn-neutral float-right" title="Keycloak group">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../keycloak_openid_client_scope/" class="btn btn-neutral float-right" title="Keycloak openid client scope">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../.." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../keycloak_openid_client_default_scopes/" class="btn btn-neutral" title="Keycloak openid client default scopes"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -357,10 +379,10 @@ The ID of the custom user federation provider can be found within the Keycloak G
           <a href="https://github.com/mrparkers/terraform-provider-keycloak" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../keycloak_openid_client_default_scopes/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../keycloak_group/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../keycloak_openid_client_scope/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
