@@ -254,6 +254,12 @@ resource &quot;keycloak_saml_client&quot; &quot;saml_client&quot; {
 <li><code>master_saml_processing_url</code> - (Optional) When specified, this URL will be used for all SAML requests.</li>
 <li><code>signing_certificate</code> - (Optional) If documents or assertions from the client are signed, this certificate will be used to verify the signature.</li>
 <li><code>signing_private_key</code> - (Optional) If documents or assertions from the client are signed, this private key will be used to verify the signature.</li>
+<li><code>idp_initiated_sso_url_name</code> - (Optional) URL fragment name to reference client when you want to do IDP Initiated SSO.</li>
+<li><code>idp_initiated_sso_relay_state</code> - (Optional) Relay state you want to send with SAML request when you want to do IDP Initiated SSO.</li>
+<li><code>assertion_consumer_post_url</code> - (Optional) SAML POST Binding URL for the client's assertion consumer service (login responses).</li>
+<li><code>assertion_consumer_redirect_url</code> - (Optional) SAML Redirect Binding URL for the client's assertion consumer service (login responses).</li>
+<li><code>logout_service_post_binding_url</code> - (Optional) SAML POST Binding URL for the client's single logout service.</li>
+<li><code>logout_service_redirect_binding_url</code> - (Optional) SAML Redirect Binding URL for the client's single logout service.</li>
 </ul>
 <h3 id="import">Import</h3>
 <p>Clients can be imported using the format <code>{{realm_id}}/{{client_keycloak_id}}</code>, where <code>client_keycloak_id</code> is the unique ID that Keycloak
