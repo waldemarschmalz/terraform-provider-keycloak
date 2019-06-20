@@ -243,9 +243,9 @@ resource &quot;keycloak_openid_client&quot; &quot;openid_client&quot; {
 <li><code>description</code> - (Optional) The description of this client in the GUI.</li>
 <li><code>access_type</code> - (Required) Specifies the type of client, which can be one of the following:<ul>
 <li><code>CONFIDENTIAL</code> - Used for server-side clients that require both client ID and secret when authenticating.
-This client should be used for applications using the Authorization Code or Client Credentials grant flows.</li>
+  This client should be used for applications using the Authorization Code or Client Credentials grant flows.</li>
 <li><code>PUBLIC</code> - Used for browser-only applications that do not require a client secret, and instead rely only on authorized redirect
-URIs for security. This client should be used for applications using the Implicit grant flow.</li>
+  URIs for security. This client should be used for applications using the Implicit grant flow.</li>
 <li><code>BEARER-ONLY</code> - Used for services that never initiate a login. This client will only allow bearer token requests.</li>
 </ul>
 </li>

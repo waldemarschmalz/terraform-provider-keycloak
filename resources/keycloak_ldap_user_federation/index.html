@@ -263,14 +263,18 @@ resource &quot;keycloak_ldap_user_federation&quot; &quot;ldap_user_federation&qu
 <li><code>bind_dn</code> - (Optional) DN of LDAP admin, which will be used by Keycloak to access LDAP server. This attribute must be set if <code>bind_credential</code> is set.</li>
 <li><code>bind_credential</code> - (Optional) Password of LDAP admin. This attribute must be set if <code>bind_dn</code> is set.</li>
 <li><code>custom_user_search_filter</code> - (Optional) Additional LDAP filter for filtering searched users. Must begin with <code>(</code> and end with <code>)</code>.</li>
-<li><code>search_scope</code> - (Optional) Can be one of <code>ONE_LEVEL</code> or <code>SUBTREE</code>:</li>
+<li><code>search_scope</code> - (Optional) Can be one of <code>ONE_LEVEL</code> or <code>SUBTREE</code>:<ul>
 <li><code>ONE_LEVEL</code>: Only search for users in the DN specified by <code>user_dn</code>.</li>
 <li><code>SUBTREE</code>: Search entire LDAP subtree.</li>
+</ul>
+</li>
 <li><code>validate_password_policy</code> - (Optional) When <code>true</code>, Keycloak will validate passwords using the realm policy before updating it.</li>
-<li><code>use_truststore_spi</code> - (Optional) Can be one of <code>ALWAYS</code>, <code>ONLY_FOR_LDAPS</code>, or <code>NEVER</code>:</li>
+<li><code>use_truststore_spi</code> - (Optional) Can be one of <code>ALWAYS</code>, <code>ONLY_FOR_LDAPS</code>, or <code>NEVER</code>:<ul>
 <li><code>ALWAYS</code> - Always use the truststore SPI for LDAP connections.</li>
 <li><code>NEVER</code> - Never use the truststore SPI for LDAP connections.</li>
 <li><code>ONLY_FOR_LDAPS</code> - Only use the truststore SPI if your LDAP connection uses the ldaps protocol.</li>
+</ul>
+</li>
 <li><code>connection_timeout</code> - (Optional) LDAP connection timeout in the format of a <a href="https://golang.org/pkg/time/#Duration.String">Go duration string</a>.</li>
 <li><code>read_timeout</code> - (Optional) LDAP read timeout in the format of a <a href="https://golang.org/pkg/time/#Duration.String">Go duration string</a>.</li>
 <li><code>pagination</code> - (Optional) When true, Keycloak assumes the LDAP server supports pagination. Defaults to <code>true</code>.</li>

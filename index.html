@@ -232,11 +232,13 @@ sure which to use, the client credentials grant is recommended, as it was design
 <ol>
 <li>Create a new client using the <code>openid-connect</code> protocol. This client can be created in the <code>master</code> realm if you would
 like to manage your entire Keycloak instance, or in any other realm if you only want to manage that realm.</li>
-<li>Update the client you just created:
-    2a. Set "Access Type" to "confidential".
-    2b. Set "Standard Flow Enabled" to "OFF".
-    2c. Set "Direct Access Grants Enabled" to "OFF"
-    2d. Set "Service Accounts Enabled" to "ON".</li>
+<li>Update the client you just created:<ol>
+<li>Set "Access Type" to "confidential".</li>
+<li>Set "Standard Flow Enabled" to "OFF".</li>
+<li>Set "Direct Access Grants Enabled" to "OFF"</li>
+<li>Set "Service Accounts Enabled" to "ON".</li>
+</ol>
+</li>
 <li>Grant required roles for managing Keycloak via the "Service Account Roles" tab in the client you created in step 1.</li>
 </ol>
 <h2 id="password-grant-setup">Password Grant Setup</h2>
@@ -334,5 +336,5 @@ the realm clients to a user or service account within the <code>master</code> re
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-04-18 16:36:35
+Build Date UTC : 2019-06-20 14:34:46
 -->

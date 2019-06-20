@@ -221,6 +221,25 @@ Users log in to realms and can be federated from multiple sources.</p>
     login_theme          = &quot;base&quot;
 
     access_code_lifespan = &quot;1h&quot;
+
+    smtp_server {
+        host = &quot;smtp.example.com&quot;
+        from = &quot;example@example.com&quot;
+
+        auth {
+            username = &quot;tom&quot;
+            password = &quot;password&quot;
+        }
+    }
+
+    internationalization {
+        supported_locales = [
+            &quot;en&quot;,
+            &quot;de&quot;,
+            &quot;es&quot;
+        ]
+        default_locale    = &quot;en&quot;
+    }
 }
 </code></pre>
 
@@ -271,6 +290,31 @@ If any of these attributes are not specified, they will default to Keycloak's de
 <li><code>access_code_lifespan_user_action</code> - (Optional) The maximum amount of time a user has to complete login related actions, such as updating a password.</li>
 <li><code>action_token_generated_by_user_lifespan</code> - (Optional) The maximum time a user has to use a user-generated permit before it expires.</li>
 <li><code>action_token_generated_by_admin_lifespan</code> - (Optional) The maximum time a user has to use an admin-generated permit before it expires.</li>
+</ul>
+<h5 id="smtp">SMTP</h5>
+<p>The <code>smtp_server</code> block can be used to configure the realm's SMTP settings, which can be found in the "Email" tab in the GUI.
+This block supports the following attributes:</p>
+<ul>
+<li><code>host</code> - (Required) The host of the SMTP server.</li>
+<li><code>port</code> - (Optional) The port of the SMTP server (defaults to 25).</li>
+<li><code>from</code> - (Required) The email address for the sender.</li>
+<li><code>from_display_name</code> - (Optional) The display name of the sender email address.</li>
+<li><code>reply_to</code> - (Optional) The "reply to" email address.</li>
+<li><code>reply_to_display_name</code> - (Optional) The display name of the "reply to" email address.</li>
+<li><code>envelope_from</code> - (Optional) The email address uses for bounces.</li>
+<li><code>starttls</code> - (Optional) When <code>true</code>, enables StartTLS. Defaults to <code>false</code>.</li>
+<li><code>ssl</code> - (Optional) When <code>true</code>, enables SSL. Defaults to <code>false</code>.</li>
+<li><code>auth</code> - (Optional) Enables authentication to the SMTP server.  This block supports the following attributes:<ul>
+<li><code>username</code>- (Required) The SMTP server username.</li>
+<li><code>password</code> - (Required) The SMTP server password.</li>
+</ul>
+</li>
+</ul>
+<h5 id="internationalization">Internationalization</h5>
+<p>Internationalization support can be configured by using the <code>internationalization</code> block, which supports the following attributes:</p>
+<ul>
+<li><code>supported_locales</code> - (Required) A list of <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 639-1</a> locale codes that the realm should support.</li>
+<li><code>default_locale</code> - (Required) The locale to use by default. This locale code must be present within the <code>supported_locales</code> list.</li>
 </ul>
 <h3 id="import">Import</h3>
 <p>Realms can be imported using their name:</p>
