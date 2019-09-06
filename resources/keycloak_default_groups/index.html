@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>keycloak_openid_client_optional_scopes - Terraform Provider: Keycloak</title>
+  <title>keycloak_default_groups - Terraform Provider: Keycloak</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "keycloak_openid_client_optional_scopes";
-    var mkdocs_page_input_path = "resources/keycloak_openid_client_optional_scopes.md";
-    var mkdocs_page_url = "/terraform-provider-keycloak/resources/keycloak_openid_client_optional_scopes/";
+    var mkdocs_page_name = "keycloak_default_groups";
+    var mkdocs_page_input_path = "resources/keycloak_default_groups.md";
+    var mkdocs_page_url = "/terraform-provider-keycloak/resources/keycloak_default_groups/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
@@ -97,28 +97,12 @@
                     
     <a class="" href="../keycloak_group_roles/">keycloak_group_roles</a>
                 </li>
-                <li class="">
-                    
-    <a class="" href="../keycloak_default_groups/">keycloak_default_groups</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../keycloak_openid_client/">keycloak_openid_client</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../keycloak_openid_client_scope/">keycloak_openid_client_scope</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../keycloak_openid_client_default_scopes/">keycloak_openid_client_default_scopes</a>
-                </li>
                 <li class=" current">
                     
-    <a class="current" href="./">keycloak_openid_client_optional_scopes</a>
+    <a class="current" href="./">keycloak_default_groups</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#keycloak_openid_client_optional_scopes">keycloak_openid_client_optional_scopes</a></li>
+    <li class="toctree-l3"><a href="#keycloak_default_groups">keycloak_default_groups</a></li>
     
         <ul>
         
@@ -132,6 +116,22 @@
     
 
     </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../keycloak_openid_client/">keycloak_openid_client</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../keycloak_openid_client_scope/">keycloak_openid_client_scope</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../keycloak_openid_client_default_scopes/">keycloak_openid_client_default_scopes</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../keycloak_openid_client_optional_scopes/">keycloak_openid_client_optional_scopes</a>
                 </li>
                 <li class="">
                     
@@ -230,10 +230,10 @@
         
       
     
-    <li>keycloak_openid_client_optional_scopes</li>
+    <li>keycloak_default_groups</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/mrparkers/terraform-provider-keycloak/edit/master/docs/resources/keycloak_openid_client_optional_scopes.md"
+        <a href="https://github.com/mrparkers/terraform-provider-keycloak/edit/master/docs/resources/keycloak_default_groups.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -243,63 +243,38 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="keycloak_openid_client_optional_scopes">keycloak_openid_client_optional_scopes</h1>
-<p>Allows for managing a Keycloak client's optional client scopes. An optional
-scope that is attached to a client using the OpenID Connect protocol will
-allow a client to request it using the OAuth 2.0 <code>scope</code> parameter. When
-requested, the scope's protocol mappers defined within that scope will be
-used to build claims for this client.</p>
-<p>Note that this resource attempts to be an <strong>authoritative</strong> source over
-optional scopes for a Keycloak client using the OpenID Connect protocol.
-This means that once Terraform controls a particular client's optional scopes,
-it will attempt to remove any optional scopes that were attached manually,
-and it will attempt to add any optional scopes that were detached manually.</p>
-<p>By default, Keycloak sets the <code>address</code>, <code>phone</code> and <code>offline_access</code> scopes as
-optional scopes for every newly created client. If you create this resource for
-the first time and do not include these scopes, a following run of <code>terraform plan</code>
-will result in changes.</p>
+                <h1 id="keycloak_default_groups">keycloak_default_groups</h1>
+<p>Allows for managing a realm's default groups.</p>
+<p>Note that you should not use <code>keycloak_default_groups</code> with a group with memberships managed
+by <code>keycloak_group_memberships</code>.</p>
 <h3 id="example-usage">Example Usage</h3>
 <pre><code class="hcl">resource &quot;keycloak_realm&quot; &quot;realm&quot; {
     realm   = &quot;my-realm&quot;
     enabled = true
 }
 
-resource &quot;keycloak_openid_client&quot; &quot;client&quot; {
-    realm_id    = &quot;${keycloak_realm.realm.id}&quot;
-    client_id   = &quot;test-client&quot;
-
-    access_type = &quot;CONFIDENTIAL&quot;
-}
-
-resource &quot;keycloak_openid_client_scope&quot; &quot;client_scope&quot; {
+resource &quot;keycloak_group&quot; &quot;group&quot; {
     realm_id = &quot;${keycloak_realm.realm.id}&quot;
-    name     = &quot;test-client-scope&quot;
+    name     = &quot;my-group&quot;
 }
 
-resource &quot;keycloak_openid_client_optional_scopes&quot; &quot;client_optional_scopes&quot; {
-    realm_id       = &quot;${keycloak_realm.realm.id}&quot;
-    client_id      = &quot;${keycloak_openid_client.client.id}&quot;
-
-    optional_scopes = [
-        &quot;address&quot;,
-        &quot;phone&quot;,
-        &quot;offline_access&quot;,
-        &quot;${keycloak_openid_client_scope.client_scope.name}&quot;
-    ]
-}
-
+resource &quot;keycloak_default_groups&quot; &quot;default&quot; {
+    realm_id  = &quot;${keycloak_realm.realm.id}&quot;
+    group_ids = [&quot;${keycloak_group.group.id}&quot;]
+} 
 </code></pre>
 
 <h3 id="argument-reference">Argument Reference</h3>
 <p>The following arguments are supported:</p>
 <ul>
-<li><code>realm_id</code> - (Required) The realm this client and scopes exists in.</li>
-<li><code>client_id</code> - (Required) The ID of the client to attach optional scopes to. Note that this is the unique ID of the client generated by Keycloak.</li>
-<li><code>optional_scopes</code> - (Required) An array of client scope names to attach to this client as optional scopes.</li>
+<li><code>realm_id</code> - (Required) The realm this group exists in.</li>
+<li><code>group_ids</code> - (Required) A set of group ids that should be default groups on the realm referenced by <code>realm_id</code>.</li>
 </ul>
 <h3 id="import">Import</h3>
-<p>This resource does not support import. Instead of importing, feel free to create this resource
-as if it did not already exist on the server.</p>
+<p>Groups can be imported using the format <code>{{realm_id}}</code> where <code>realm_id</code> is the realm the group exists in.</p>
+<p>Example:</p>
+<pre><code class="bash">$ terraform import keycloak_default_groups.default my-realm
+</code></pre>
               
             </div>
           </div>
@@ -307,10 +282,10 @@ as if it did not already exist on the server.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../keycloak_openid_user_attribute_protocol_mapper/" class="btn btn-neutral float-right" title="keycloak_openid_user_attribute_protocol_mapper">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../keycloak_openid_client/" class="btn btn-neutral float-right" title="keycloak_openid_client">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../keycloak_openid_client_default_scopes/" class="btn btn-neutral" title="keycloak_openid_client_default_scopes"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../keycloak_group_roles/" class="btn btn-neutral" title="keycloak_group_roles"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -338,10 +313,10 @@ as if it did not already exist on the server.</p>
           <a href="https://github.com/mrparkers/terraform-provider-keycloak/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../keycloak_openid_client_default_scopes/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../keycloak_group_roles/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../keycloak_openid_user_attribute_protocol_mapper/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../keycloak_openid_client/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>keycloak_openid_client_optional_scopes - Terraform Provider: Keycloak</title>
+  <title>keycloak_role - Terraform Provider: Keycloak</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "keycloak_openid_client_optional_scopes";
-    var mkdocs_page_input_path = "resources/keycloak_openid_client_optional_scopes.md";
-    var mkdocs_page_url = "/terraform-provider-keycloak/resources/keycloak_openid_client_optional_scopes/";
+    var mkdocs_page_name = "keycloak_role";
+    var mkdocs_page_input_path = "resources/keycloak_role.md";
+    var mkdocs_page_url = "/terraform-provider-keycloak/resources/keycloak_role/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
@@ -81,9 +81,29 @@
                     
     <a class="" href="../keycloak_user/">keycloak_user</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../keycloak_role/">keycloak_role</a>
+    <a class="current" href="./">keycloak_role</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#keycloak_role">keycloak_role</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#example-usage-realm-role">Example Usage (Realm role)</a></li>
+        
+            <li><a class="toctree-l4" href="#example-usage-client-role">Example Usage (Client role)</a></li>
+        
+            <li><a class="toctree-l4" href="#example-usage-composite-role">Example Usage (Composite role)</a></li>
+        
+            <li><a class="toctree-l4" href="#argument-reference">Argument Reference</a></li>
+        
+            <li><a class="toctree-l4" href="#import">Import</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
@@ -113,25 +133,9 @@
                     
     <a class="" href="../keycloak_openid_client_default_scopes/">keycloak_openid_client_default_scopes</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">keycloak_openid_client_optional_scopes</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#keycloak_openid_client_optional_scopes">keycloak_openid_client_optional_scopes</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#example-usage">Example Usage</a></li>
-        
-            <li><a class="toctree-l4" href="#argument-reference">Argument Reference</a></li>
-        
-            <li><a class="toctree-l4" href="#import">Import</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../keycloak_openid_client_optional_scopes/">keycloak_openid_client_optional_scopes</a>
                 </li>
                 <li class="">
                     
@@ -230,10 +234,10 @@
         
       
     
-    <li>keycloak_openid_client_optional_scopes</li>
+    <li>keycloak_role</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/mrparkers/terraform-provider-keycloak/edit/master/docs/resources/keycloak_openid_client_optional_scopes.md"
+        <a href="https://github.com/mrparkers/terraform-provider-keycloak/edit/master/docs/resources/keycloak_role.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -243,63 +247,127 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="keycloak_openid_client_optional_scopes">keycloak_openid_client_optional_scopes</h1>
-<p>Allows for managing a Keycloak client's optional client scopes. An optional
-scope that is attached to a client using the OpenID Connect protocol will
-allow a client to request it using the OAuth 2.0 <code>scope</code> parameter. When
-requested, the scope's protocol mappers defined within that scope will be
-used to build claims for this client.</p>
-<p>Note that this resource attempts to be an <strong>authoritative</strong> source over
-optional scopes for a Keycloak client using the OpenID Connect protocol.
-This means that once Terraform controls a particular client's optional scopes,
-it will attempt to remove any optional scopes that were attached manually,
-and it will attempt to add any optional scopes that were detached manually.</p>
-<p>By default, Keycloak sets the <code>address</code>, <code>phone</code> and <code>offline_access</code> scopes as
-optional scopes for every newly created client. If you create this resource for
-the first time and do not include these scopes, a following run of <code>terraform plan</code>
-will result in changes.</p>
-<h3 id="example-usage">Example Usage</h3>
+                <h1 id="keycloak_role">keycloak_role</h1>
+<p>Allows for creating and managing roles within Keycloak.</p>
+<p>Roles allow you define privileges within Keycloak and map them to users
+and groups.</p>
+<h3 id="example-usage-realm-role">Example Usage (Realm role)</h3>
+<pre><code class="hcl">resource &quot;keycloak_realm&quot; &quot;realm&quot; {
+    realm   = &quot;my-realm&quot;
+    enabled = true
+}
+
+resource &quot;keycloak_role&quot; &quot;realm_role&quot; {
+    realm_id    = &quot;${keycloak_realm.realm.id}&quot;
+    name        = &quot;my-realm-role&quot;
+    description = &quot;My Realm Role&quot;
+}
+</code></pre>
+
+<h3 id="example-usage-client-role">Example Usage (Client role)</h3>
 <pre><code class="hcl">resource &quot;keycloak_realm&quot; &quot;realm&quot; {
     realm   = &quot;my-realm&quot;
     enabled = true
 }
 
 resource &quot;keycloak_openid_client&quot; &quot;client&quot; {
+  realm_id  = &quot;${keycloak_realm.realm.id}&quot;
+  client_id = &quot;client&quot;
+  name      = &quot;client&quot;
+
+  enabled = true
+
+  access_type = &quot;BEARER-ONLY&quot;
+}
+
+resource &quot;keycloak_role&quot; &quot;client_role&quot; {
     realm_id    = &quot;${keycloak_realm.realm.id}&quot;
-    client_id   = &quot;test-client&quot;
+    client_id   = &quot;${keycloak_client.client.id}&quot;
+    name        = &quot;my-client-role&quot;
+    description = &quot;My Client Role&quot;
+}
+</code></pre>
 
-    access_type = &quot;CONFIDENTIAL&quot;
+<h3 id="example-usage-composite-role">Example Usage (Composite role)</h3>
+<pre><code class="hcl">resource &quot;keycloak_realm&quot; &quot;realm&quot; {
+    realm   = &quot;my-realm&quot;
+    enabled = true
 }
 
-resource &quot;keycloak_openid_client_scope&quot; &quot;client_scope&quot; {
-    realm_id = &quot;${keycloak_realm.realm.id}&quot;
-    name     = &quot;test-client-scope&quot;
+# realm roles
+
+resource &quot;keycloak_role&quot; &quot;create_role&quot; {
+    realm_id    = &quot;${keycloak_realm.realm.id}&quot;
+    name        = &quot;create&quot;
 }
 
-resource &quot;keycloak_openid_client_optional_scopes&quot; &quot;client_optional_scopes&quot; {
-    realm_id       = &quot;${keycloak_realm.realm.id}&quot;
-    client_id      = &quot;${keycloak_openid_client.client.id}&quot;
+resource &quot;keycloak_role&quot; &quot;read_role&quot; {
+    realm_id    = &quot;${keycloak_realm.realm.id}&quot;
+    name        = &quot;read&quot;
+}
 
-    optional_scopes = [
-        &quot;address&quot;,
-        &quot;phone&quot;,
-        &quot;offline_access&quot;,
-        &quot;${keycloak_openid_client_scope.client_scope.name}&quot;
+resource &quot;keycloak_role&quot; &quot;update_role&quot; {
+    realm_id    = &quot;${keycloak_realm.realm.id}&quot;
+    name        = &quot;update&quot;
+}
+
+resource &quot;keycloak_role&quot; &quot;delete_role&quot; {
+    realm_id    = &quot;${keycloak_realm.realm.id}&quot;
+    name        = &quot;delete&quot;
+}
+
+# client role
+
+resource &quot;keycloak_openid_client&quot; &quot;client&quot; {
+  realm_id  = &quot;${keycloak_realm.realm.id}&quot;
+  client_id = &quot;client&quot;
+  name      = &quot;client&quot;
+
+  enabled = true
+
+  access_type = &quot;BEARER-ONLY&quot;
+}
+
+resource &quot;keycloak_role&quot; &quot;client_role&quot; {
+    realm_id    = &quot;${keycloak_realm.realm.id}&quot;
+    client_id   = &quot;${keycloak_client.client.id}&quot;
+    name        = &quot;my-client-role&quot;
+    description = &quot;My Client Role&quot;
+}
+
+resource &quot;keycloak_role&quot; &quot;admin_role&quot; {
+    realm_id        = &quot;${keycloak_realm.realm.id}&quot;
+    name            = &quot;admin&quot;
+    composite_roles = [
+      &quot;{keycloak_role.create_role.id}&quot;,
+      &quot;{keycloak_role.read_role.id}&quot;,
+      &quot;{keycloak_role.update_role.id}&quot;,
+      &quot;{keycloak_role.delete_role.id}&quot;,
+      &quot;{keycloak_role.client_role.id}&quot;,
     ]
 }
-
 </code></pre>
 
 <h3 id="argument-reference">Argument Reference</h3>
 <p>The following arguments are supported:</p>
 <ul>
-<li><code>realm_id</code> - (Required) The realm this client and scopes exists in.</li>
-<li><code>client_id</code> - (Required) The ID of the client to attach optional scopes to. Note that this is the unique ID of the client generated by Keycloak.</li>
-<li><code>optional_scopes</code> - (Required) An array of client scope names to attach to this client as optional scopes.</li>
+<li><code>realm_id</code> - (Required) The realm this role exists within.</li>
+<li><code>client_id</code> - (Optional) When specified, this role will be created as
+  a client role attached to the client with the provided ID</li>
+<li><code>name</code> - (Required) The name of the role</li>
+<li><code>description</code> - (Optional) The description of the role</li>
+<li><code>composite_roles</code> - (Optional) When specified, this role will be a
+  composite role, composed of all roles that have an ID present within
+  this list.</li>
 </ul>
 <h3 id="import">Import</h3>
-<p>This resource does not support import. Instead of importing, feel free to create this resource
-as if it did not already exist on the server.</p>
+<p>Roles can be imported using the format <code>{{realm_id}}/{{role_id}}</code>, where
+<code>role_id</code> is the unique ID that Keycloak assigns to the role. The ID is
+not easy to find in the GUI, but it appears in the URL when editing the
+role.</p>
+<p>Example:</p>
+<pre><code class="bash">$ terraform import keycloak_role.role my-realm/7e8cf32a-8acb-4d34-89c4-04fb1d10ccad
+</code></pre>
               
             </div>
           </div>
@@ -307,10 +375,10 @@ as if it did not already exist on the server.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../keycloak_openid_user_attribute_protocol_mapper/" class="btn btn-neutral float-right" title="keycloak_openid_user_attribute_protocol_mapper">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../keycloak_group/" class="btn btn-neutral float-right" title="keycloak_group">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../keycloak_openid_client_default_scopes/" class="btn btn-neutral" title="keycloak_openid_client_default_scopes"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../keycloak_user/" class="btn btn-neutral" title="keycloak_user"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -338,10 +406,10 @@ as if it did not already exist on the server.</p>
           <a href="https://github.com/mrparkers/terraform-provider-keycloak/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../keycloak_openid_client_default_scopes/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../keycloak_user/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../keycloak_openid_user_attribute_protocol_mapper/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../keycloak_group/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

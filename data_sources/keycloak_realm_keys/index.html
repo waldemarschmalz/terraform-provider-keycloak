@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>keycloak_group - Terraform Provider: Keycloak</title>
+  <title>keycloak_realm_keys - Terraform Provider: Keycloak</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "keycloak_group";
-    var mkdocs_page_input_path = "resources/keycloak_group.md";
-    var mkdocs_page_url = "/terraform-provider-keycloak/resources/keycloak_group/";
+    var mkdocs_page_name = "keycloak_realm_keys";
+    var mkdocs_page_input_path = "data_sources/keycloak_realm_keys.md";
+    var mkdocs_page_url = "/terraform-provider-keycloak/data_sources/keycloak_realm_keys/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
@@ -58,13 +58,27 @@
 		
     <span class="caption-text">Data Sources</span>
     <ul class="subnav">
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../../data_sources/keycloak_realm_keys/">keycloak_realm_keys</a>
+    <a class="current" href="./">keycloak_realm_keys</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#keycloak_realm_keys-data-source">keycloak_realm_keys data source</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#example-usage">Example Usage</a></li>
+        
+            <li><a class="toctree-l4" href="#argument-reference">Argument Reference</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
                 <li class="">
                     
-    <a class="" href="../../data_sources/keycloak_role/">keycloak_role</a>
+    <a class="" href="../keycloak_role/">keycloak_role</a>
                 </li>
     </ul>
 	    </li>
@@ -75,133 +89,115 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../keycloak_realm/">keycloak_realm</a>
+    <a class="" href="../../resources/keycloak_realm/">keycloak_realm</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_user/">keycloak_user</a>
+    <a class="" href="../../resources/keycloak_user/">keycloak_user</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_role/">keycloak_role</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">keycloak_group</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#keycloak_group">keycloak_group</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#example-usage">Example Usage</a></li>
-        
-            <li><a class="toctree-l4" href="#argument-reference">Argument Reference</a></li>
-        
-            <li><a class="toctree-l4" href="#attributes-reference">Attributes Reference</a></li>
-        
-            <li><a class="toctree-l4" href="#import">Import</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../../resources/keycloak_role/">keycloak_role</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_group_memberships/">keycloak_group_memberships</a>
+    <a class="" href="../../resources/keycloak_group/">keycloak_group</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_group_roles/">keycloak_group_roles</a>
+    <a class="" href="../../resources/keycloak_group_memberships/">keycloak_group_memberships</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_default_groups/">keycloak_default_groups</a>
+    <a class="" href="../../resources/keycloak_group_roles/">keycloak_group_roles</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_openid_client/">keycloak_openid_client</a>
+    <a class="" href="../../resources/keycloak_default_groups/">keycloak_default_groups</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_openid_client_scope/">keycloak_openid_client_scope</a>
+    <a class="" href="../../resources/keycloak_openid_client/">keycloak_openid_client</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_openid_client_default_scopes/">keycloak_openid_client_default_scopes</a>
+    <a class="" href="../../resources/keycloak_openid_client_scope/">keycloak_openid_client_scope</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_openid_client_optional_scopes/">keycloak_openid_client_optional_scopes</a>
+    <a class="" href="../../resources/keycloak_openid_client_default_scopes/">keycloak_openid_client_default_scopes</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_openid_user_attribute_protocol_mapper/">keycloak_openid_user_attribute_protocol_mapper</a>
+    <a class="" href="../../resources/keycloak_openid_client_optional_scopes/">keycloak_openid_client_optional_scopes</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_openid_user_property_protocol_mapper/">keycloak_openid_user_property_protocol_mapper</a>
+    <a class="" href="../../resources/keycloak_openid_user_attribute_protocol_mapper/">keycloak_openid_user_attribute_protocol_mapper</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_openid_group_membership_protocol_mapper/">keycloak_openid_group_membership_protocol_mapper</a>
+    <a class="" href="../../resources/keycloak_openid_user_property_protocol_mapper/">keycloak_openid_user_property_protocol_mapper</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_openid_hardcoded_claim_protocol_mapper/">keycloak_openid_hardcoded_claim_protocol_mapper</a>
+    <a class="" href="../../resources/keycloak_openid_group_membership_protocol_mapper/">keycloak_openid_group_membership_protocol_mapper</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_openid_full_name_protocol_mapper/">keycloak_openid_full_name_protocol_mapper</a>
+    <a class="" href="../../resources/keycloak_openid_hardcoded_claim_protocol_mapper/">keycloak_openid_hardcoded_claim_protocol_mapper</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_openid_audience_protocol_mapper/">keycloak_openid_audience_protocol_mapper</a>
+    <a class="" href="../../resources/keycloak_openid_full_name_protocol_mapper/">keycloak_openid_full_name_protocol_mapper</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_openid_hardcoded_role_protocol_mapper/">keycloak_openid_hardcoded_role_protocol_mapper</a>
+    <a class="" href="../../resources/keycloak_openid_audience_protocol_mapper/">keycloak_openid_audience_protocol_mapper</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_saml_client/">keycloak_saml_client</a>
+    <a class="" href="../../resources/keycloak_openid_hardcoded_role_protocol_mapper/">keycloak_openid_hardcoded_role_protocol_mapper</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_saml_user_attribute_protocol_mapper/">keycloak_saml_user_attribute_protocol_mapper</a>
+    <a class="" href="../../resources/keycloak_saml_client/">keycloak_saml_client</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_saml_user_property_protocol_mapper/">keycloak_saml_user_property_protocol_mapper</a>
+    <a class="" href="../../resources/keycloak_saml_user_attribute_protocol_mapper/">keycloak_saml_user_attribute_protocol_mapper</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_generic_client_protocol_mapper/">keycloak_generic_client_protocol_mapper</a>
+    <a class="" href="../../resources/keycloak_saml_user_property_protocol_mapper/">keycloak_saml_user_property_protocol_mapper</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_ldap_user_federation/">keycloak_ldap_user_federation</a>
+    <a class="" href="../../resources/keycloak_generic_client_protocol_mapper/">keycloak_generic_client_protocol_mapper</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_ldap_full_name_mapper/">keycloak_ldap_full_name_mapper</a>
+    <a class="" href="../../resources/keycloak_ldap_user_federation/">keycloak_ldap_user_federation</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_ldap_group_mapper/">keycloak_ldap_group_mapper</a>
+    <a class="" href="../../resources/keycloak_ldap_full_name_mapper/">keycloak_ldap_full_name_mapper</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_ldap_msad_user_account_control_mapper/">keycloak_ldap_msad_user_account_control_mapper</a>
+    <a class="" href="../../resources/keycloak_ldap_group_mapper/">keycloak_ldap_group_mapper</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_ldap_user_attribute_mapper/">keycloak_ldap_user_attribute_mapper</a>
+    <a class="" href="../../resources/keycloak_ldap_msad_user_account_control_mapper/">keycloak_ldap_msad_user_account_control_mapper</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../keycloak_custom_user_federation/">keycloak_custom_user_federation</a>
+    <a class="" href="../../resources/keycloak_ldap_user_attribute_mapper/">keycloak_ldap_user_attribute_mapper</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../resources/keycloak_custom_user_federation/">keycloak_custom_user_federation</a>
                 </li>
     </ul>
 	    </li>
@@ -228,14 +224,14 @@
     
       
         
-          <li>Resources &raquo;</li>
+          <li>Data Sources &raquo;</li>
         
       
     
-    <li>keycloak_group</li>
+    <li>keycloak_realm_keys</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/mrparkers/terraform-provider-keycloak/edit/master/docs/resources/keycloak_group.md"
+        <a href="https://github.com/mrparkers/terraform-provider-keycloak/edit/master/docs/data_sources/keycloak_realm_keys.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -245,49 +241,40 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="keycloak_group">keycloak_group</h1>
-<p>Allows for creating and managing Groups within Keycloak.</p>
-<p>Groups provide a logical wrapping for users within Keycloak. Users within a
-group can share attributes and roles, and group membership can be mapped
-to a claim.</p>
-<p>Groups can also be federated from external data sources, such as LDAP or Active Directory.
-This resource <strong>should not</strong> be used to manage groups that were created this way.</p>
+                <h1 id="keycloak_realm_keys-data-source">keycloak_realm_keys data source</h1>
+<p>Use this data source to get the keys of a realm. Keys can be filtered by algorithm and status.</p>
+<p>Remarks:</p>
+<ul>
+<li>A key must meet all filter criteria</li>
+<li>This datasource may return more than one value.</li>
+<li>If no key matches the filter criteria, then an error is returned.</li>
+</ul>
 <h3 id="example-usage">Example Usage</h3>
 <pre><code class="hcl">resource &quot;keycloak_realm&quot; &quot;realm&quot; {
     realm   = &quot;my-realm&quot;
     enabled = true
 }
 
-resource &quot;keycloak_group&quot; &quot;parent_group&quot; {
-    realm_id = &quot;${keycloak_realm.realm.id}&quot;
-    name     = &quot;parent-group&quot;
+data &quot;keycloak_realm_keys&quot; &quot;keys&quot; {
+  realm_id  = keycloak_realm.realm
+  algorithms = [&quot;AES&quot;, &quot;RS256&quot;]
+  status = [&quot;ACTIVE&quot;, &quot;PASSIVE&quot;]
 }
 
-resource &quot;keycloak_group&quot; &quot;child_group&quot; {
-    realm_id  = &quot;${keycloak_realm.realm.id}&quot;
-    parent_id = &quot;${keycloak_group.parent_group.id}&quot;
-    name      = &quot;child-group&quot;
+# show certificate of first key:
+output &quot;certificate&quot; {
+  value = data.keycloak_realm_keys.realm.keys[0].certificate
 }
+
 </code></pre>
 
 <h3 id="argument-reference">Argument Reference</h3>
 <p>The following arguments are supported:</p>
 <ul>
-<li><code>realm_id</code> - (Required) The realm this group exists in.</li>
-<li><code>parent_id</code> - (Optional) The ID of this group's parent. If omitted, this group will be defined at the root level.</li>
-<li><code>name</code> - (Required) The name of the group.</li>
+<li><code>realm_id</code> - (Required) The realm of which the keys are retrieved.</li>
+<li><code>algorithms</code> - (Optional) When specified, keys are filtered by algorithm (values for algorithm: <code>HS256</code>, <code>RS256</code>,<code>AES</code>, ...)</li>
+<li><code>status</code> - (Optional) When specified, keys are filtered by status (values for status: <code>ACTIVE</code>, <code>DISABLED</code> and <code>PASSIVE</code>)</li>
 </ul>
-<h3 id="attributes-reference">Attributes Reference</h3>
-<p>In addition to the arguments listed above, the following computed attributes are exported:</p>
-<ul>
-<li><code>path</code> - The complete path of the group. For example, the child group's path in the example configuration would be <code>/parent-group/child-group</code>.</li>
-</ul>
-<h3 id="import">Import</h3>
-<p>Groups can be imported using the format <code>{{realm_id}}/{{group_id}}</code>, where <code>group_id</code> is the unique ID that Keycloak
-assigns to the group upon creation. This value can be found in the URI when editing this group in the GUI, and is typically a GUID.</p>
-<p>Example:</p>
-<pre><code class="bash">$ terraform import keycloak_group.child_group my-realm/934a4a4e-28bd-4703-a0fa-332df153aabd
-</code></pre>
               
             </div>
           </div>
@@ -295,10 +282,10 @@ assigns to the group upon creation. This value can be found in the URI when edit
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../keycloak_group_memberships/" class="btn btn-neutral float-right" title="keycloak_group_memberships">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../keycloak_role/" class="btn btn-neutral float-right" title="keycloak_role">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../keycloak_role/" class="btn btn-neutral" title="keycloak_role"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../.." class="btn btn-neutral" title="Getting Started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -326,10 +313,10 @@ assigns to the group upon creation. This value can be found in the URI when edit
           <a href="https://github.com/mrparkers/terraform-provider-keycloak/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../keycloak_role/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../keycloak_group_memberships/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../keycloak_role/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
