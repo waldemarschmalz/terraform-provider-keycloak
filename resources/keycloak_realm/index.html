@@ -60,6 +60,10 @@
     <ul class="subnav">
                 <li class="">
                     
+    <a class="" href="../../data_sources/keycloak_realm/">keycloak_realm</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../../data_sources/keycloak_realm_keys/">keycloak_realm_keys</a>
                 </li>
                 <li class="">
@@ -160,6 +164,10 @@
                 <li class="">
                     
     <a class="" href="../keycloak_openid_hardcoded_role_protocol_mapper/">keycloak_openid_hardcoded_role_protocol_mapper</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../keycloak_openid_user_realm_role_protocol_mapper/">keycloak_openid_user_realm_role_protocol_mapper</a>
                 </li>
                 <li class="">
                     
@@ -275,6 +283,18 @@ Users log in to realms and can be federated from multiple sources.</p>
         ]
         default_locale    = &quot;en&quot;
     }
+
+    security_defenses {
+        headers {
+            x_frame_options                     = &quot;DENY&quot;
+            content_security_policy             = &quot;frame-src 'self'; frame-ancestors 'self'; object-src 'none';&quot;
+            content_security_policy_report_only = &quot;&quot;
+            x_content_type_options              = &quot;nosniff&quot;
+            x_robots_tag                        = &quot;none&quot;
+            x_xss_protection                    = &quot;1; mode=block&quot;
+            strict_transport_security           = &quot;max-age=31536000; includeSubDomains&quot;
+        }
+    }
 }
 </code></pre>
 
@@ -351,6 +371,8 @@ This block supports the following attributes:</p>
 <li><code>supported_locales</code> - (Required) A list of <a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">ISO 639-1</a> locale codes that the realm should support.</li>
 <li><code>default_locale</code> - (Required) The locale to use by default. This locale code must be present within the <code>supported_locales</code> list.</li>
 </ul>
+<h5 id="security-defenses-headers">Security Defenses Headers</h5>
+<p>Header configuration support for browser security settings.</p>
 <h3 id="import">Import</h3>
 <p>Realms can be imported using their name:</p>
 <pre><code class="bash">$ terraform import keycloak_realm.realm test
