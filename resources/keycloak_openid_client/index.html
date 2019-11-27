@@ -118,6 +118,8 @@
         
             <li><a class="toctree-l4" href="#argument-reference">Argument Reference</a></li>
         
+            <li><a class="toctree-l4" href="#attributes-reference">Attributes Reference</a></li>
+        
             <li><a class="toctree-l4" href="#import">Import</a></li>
         
         </ul>
@@ -302,6 +304,12 @@ should be treated with the same care as a password. If omitted, Keycloak will ge
 wildcards in the form of an asterisk can be used here. This attribute must be set if either <code>standard_flow_enabled</code> or <code>implicit_flow_enabled</code>
 is set to <code>true</code>.</li>
 <li><code>web_origins</code> - (Optional) A list of allowed CORS origins. <code>+</code> can be used to permit all valid redirect URIs, and <code>*</code> can be used to permit all origins.</li>
+<li><code>pkce_code_challenge_method</code> - (Optional) The challenge method to use for Proof Key for Code Exchange. Can be either <code>plain</code> or <code>S256</code>.</li>
+</ul>
+<h3 id="attributes-reference">Attributes Reference</h3>
+<p>In addition to the arguments listed above, the following computed attributes are exported:</p>
+<ul>
+<li><code>service_account_user_id</code> - When service accounts are enabled for this client, this attribute is the unique ID for the Keycloak user that represents this service account.</li>
 </ul>
 <h3 id="import">Import</h3>
 <p>Clients can be imported using the format <code>{{realm_id}}/{{client_keycloak_id}}</code>, where <code>client_keycloak_id</code> is the unique ID that Keycloak
