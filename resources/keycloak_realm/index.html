@@ -264,6 +264,11 @@ Users log in to realms and can be federated from multiple sources.</p>
     login_theme          = &quot;base&quot;
 
     access_code_lifespan = &quot;1h&quot;
+    ssl_required  = &quot;external&quot;
+    password_policy = &quot;upperCase(1) and length(8) and forceExpiredPasswordChange(365) and notUsername&quot;
+    attributes = {
+      mycustomAttribute = &quot;myCustomValue&quot;
+    }
 
     smtp_server {
         host = &quot;smtp.example.com&quot;
@@ -294,6 +299,15 @@ Users log in to realms and can be federated from multiple sources.</p>
             x_xss_protection                    = &quot;1; mode=block&quot;
             strict_transport_security           = &quot;max-age=31536000; includeSubDomains&quot;
         }
+        brute_force_detection {
+            permanent_lockout                 = false
+            max_login_failures                = 30
+            wait_increment_seconds            = 60
+            quick_login_check_milli_seconds   = 1000
+            minimum_quick_login_wait_seconds  = 60
+            max_failure_wait_seconds          = 900
+            failure_reset_time_seconds        = 43200
+        }
     }
 }
 </code></pre>
@@ -317,6 +331,7 @@ If any of these attributes are not specified, they will default to Keycloak's de
 <li><code>verify_email</code> - (Optional) When true, users are required to verify their email address after registration and after email address changes.</li>
 <li><code>login_with_email_allowed</code> - (Optional) When true, users may log in with their email address.</li>
 <li><code>duplicate_emails_allowed</code> - (Optional) When true, multiple users will be allowed to have the same email address. This attribute must be set to <code>false</code> if <code>login_with_email_allowed</code> is set to <code>true</code>.</li>
+<li><code>ssl_required</code> - (Optional) Can be one of following values: 'none, 'external' or 'all'</li>
 </ul>
 <h5 id="themes">Themes</h5>
 <p>The following attributes can be used to configure themes for the realm. Custom themes can be specified here.
@@ -330,7 +345,8 @@ If any of these attributes are not specified, they will default to Keycloak's de
 <h5 id="tokens">Tokens</h5>
 <p>The following attributes can be found in the "Tokens" tab within the realm settings.</p>
 <ul>
-<li><code>refresh_token_max_reuse</code> - (Optional) Maximum number of times a refresh token can be reused before they are revoked. If unspecified, refresh tokens will only be revoked when a different token is used.</li>
+<li><code>revoke_refresh_token</code> - (Optional) If enabled a refresh token can only be used number of times specified in 'refresh_token_max_reuse' before they are revoked. If unspecified, refresh tokens can be reused.</li>
+<li><code>refresh_token_max_reuse</code> - (Optional) Maximum number of times a refresh token can be reused before they are revoked. If unspecified and 'revoke_refresh_token' is enabled the default value is 0 and refresh tokens can not be reused.</li>
 </ul>
 <p>The attributes below should be specified as <a href="https://golang.org/pkg/time/#Duration.String">Go duration strings</a>. They will default to Keycloak's default settings.</p>
 <ul>
@@ -372,7 +388,9 @@ This block supports the following attributes:</p>
 <li><code>default_locale</code> - (Required) The locale to use by default. This locale code must be present within the <code>supported_locales</code> list.</li>
 </ul>
 <h5 id="security-defenses-headers">Security Defenses Headers</h5>
-<p>Header configuration support for browser security settings.</p>
+<p>Header configuration support for browser security settings and brute force detection</p>
+<h4 id="atributes">Atributes</h4>
+<p>Map, can be used to add custom attributes to a realm. Or perhaps influence a certain attribute that is not supported in this terraform-provider</p>
 <h3 id="import">Import</h3>
 <p>Realms can be imported using their name:</p>
 <pre><code class="bash">$ terraform import keycloak_realm.realm test
