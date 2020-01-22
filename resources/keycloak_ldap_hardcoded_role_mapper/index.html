@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>keycloak_ldap_msad_user_account_control_mapper - Terraform Provider: Keycloak</title>
+  <title>keycloak_ldap_hardcoded_role_mapper - Terraform Provider: Keycloak</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "keycloak_ldap_msad_user_account_control_mapper";
-    var mkdocs_page_input_path = "resources/keycloak_ldap_msad_user_account_control_mapper.md";
-    var mkdocs_page_url = "/terraform-provider-keycloak/resources/keycloak_ldap_msad_user_account_control_mapper/";
+    var mkdocs_page_name = "keycloak_ldap_hardcoded_role_mapper";
+    var mkdocs_page_input_path = "resources/keycloak_ldap_hardcoded_role_mapper.md";
+    var mkdocs_page_url = "/terraform-provider-keycloak/resources/keycloak_ldap_hardcoded_role_mapper/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
@@ -189,16 +189,12 @@
                     
     <a class="" href="../keycloak_ldap_group_mapper/">keycloak_ldap_group_mapper</a>
                 </li>
-                <li class="">
-                    
-    <a class="" href="../keycloak_ldap_hardcoded_role_mapper/">keycloak_ldap_hardcoded_role_mapper</a>
-                </li>
                 <li class=" current">
                     
-    <a class="current" href="./">keycloak_ldap_msad_user_account_control_mapper</a>
+    <a class="current" href="./">keycloak_ldap_hardcoded_role_mapper</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#keycloak_ldap_msad_user_account_control_mapper">keycloak_ldap_msad_user_account_control_mapper</a></li>
+    <li class="toctree-l3"><a href="#keycloak_ldap_hardcoded_role_mapper">keycloak_ldap_hardcoded_role_mapper</a></li>
     
         <ul>
         
@@ -212,6 +208,10 @@
     
 
     </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../keycloak_ldap_msad_user_account_control_mapper/">keycloak_ldap_msad_user_account_control_mapper</a>
                 </li>
                 <li class="">
                     
@@ -258,10 +258,10 @@
         
       
     
-    <li>keycloak_ldap_msad_user_account_control_mapper</li>
+    <li>keycloak_ldap_hardcoded_role_mapper</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/mrparkers/terraform-provider-keycloak/edit/master/docs/resources/keycloak_ldap_msad_user_account_control_mapper.md"
+        <a href="https://github.com/mrparkers/terraform-provider-keycloak/edit/master/docs/resources/keycloak_ldap_hardcoded_role_mapper.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -271,13 +271,8 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="keycloak_ldap_msad_user_account_control_mapper">keycloak_ldap_msad_user_account_control_mapper</h1>
-<p>Allows for creating and managing MSAD user account control mappers for Keycloak
-users federated via LDAP.</p>
-<p>The MSAD (Microsoft Active Directory) user account control mapper is specific
-to LDAP user federation providers that are pulling from AD, and it can propagate
-AD user state to Keycloak in order to enforce settings like expired passwords
-or disabled accounts.</p>
+                <h1 id="keycloak_ldap_hardcoded_role_mapper">keycloak_ldap_hardcoded_role_mapper</h1>
+<p>This mapper will grant a specified Keycloak role to each Keycloak user linked with LDAP.</p>
 <h3 id="example-usage">Example Usage</h3>
 <pre><code class="hcl">resource &quot;keycloak_realm&quot; &quot;realm&quot; {
     realm   = &quot;test&quot;
@@ -285,27 +280,27 @@ or disabled accounts.</p>
 }
 
 resource &quot;keycloak_ldap_user_federation&quot; &quot;ldap_user_federation&quot; {
-    name                    = &quot;ad&quot;
-    realm_id                = &quot;${keycloak_realm.realm.id}&quot;
+    name                    = &quot;openldap&quot;
+    realm_id                = keycloak_realm.realm.id
 
     username_ldap_attribute = &quot;cn&quot;
     rdn_ldap_attribute      = &quot;cn&quot;
-    uuid_ldap_attribute     = &quot;objectGUID&quot;
+    uuid_ldap_attribute     = &quot;entryDN&quot;
     user_object_classes     = [
-        &quot;person&quot;,
-        &quot;organizationalPerson&quot;,
-        &quot;user&quot;
+        &quot;simpleSecurityObject&quot;,
+        &quot;organizationalRole&quot;
     ]
-    connection_url          = &quot;ldap://my-ad-server&quot;
+    connection_url          = &quot;ldap://openldap&quot;
     users_dn                = &quot;dc=example,dc=org&quot;
     bind_dn                 = &quot;cn=admin,dc=example,dc=org&quot;
     bind_credential         = &quot;admin&quot;
 }
 
-resource &quot;keycloak_ldap_msad_user_account_control_mapper&quot; &quot;msad_user_account_control_mapper&quot; {
-    realm_id                 = &quot;${keycloak_realm.realm.id}&quot;
-    ldap_user_federation_id  = &quot;${keycloak_ldap_user_federation.ldap_user_federation.id}&quot;
-    name                     = &quot;msad-user-account-control-mapper&quot;
+resource &quot;keycloak_ldap_hardcoded_role_mapper&quot; &quot;assign_admin_role_to_all_users&quot; {
+  realm_id                = keycloak_realm.realm.id
+  ldap_user_federation_id = keycloak_ldap_user_federation.ldap_user_federation.id
+  name                    = &quot;assign-admin-role-to-all-users&quot;
+  role                    = &quot;admin&quot;
 }
 </code></pre>
 
@@ -315,13 +310,13 @@ resource &quot;keycloak_ldap_msad_user_account_control_mapper&quot; &quot;msad_u
 <li><code>realm_id</code> - (Required) The realm that this LDAP mapper will exist in.</li>
 <li><code>ldap_user_federation_id</code> - (Required) The ID of the LDAP user federation provider to attach this mapper to.</li>
 <li><code>name</code> - (Required) Display name of this mapper when displayed in the console.</li>
-<li><code>ldap_password_policy_hints_enabled</code> - (Optional) When <code>true</code>, advanced password policies, such as password hints and previous password history will be used when writing new passwords to AD. Defaults to <code>false</code>.</li>
+<li><code>role</code> - (Required) The role which should be assigned to the users.</li>
 </ul>
 <h3 id="import">Import</h3>
 <p>LDAP mappers can be imported using the format <code>{{realm_id}}/{{ldap_user_federation_id}}/{{ldap_mapper_id}}</code>.
 The ID of the LDAP user federation provider and the mapper can be found within
 the Keycloak GUI, and they are typically GUIDs:</p>
-<pre><code class="bash">$ terraform import keycloak_ldap_msad_user_account_control_mapper.msad_user_account_control_mapper my-realm/af2a6ca3-e4d7-49c3-b08b-1b3c70b4b860/3d923ece-1a91-4bf7-adaf-3b82f2a12b67
+<pre><code class="bash">$ terraform import keycloak_ldap_hardcoded_role_mapper.ldap_hardcoded_role_mapper my-realm/af2a6ca3-e4d7-49c3-b08b-1b3c70b4b860/3d923ece-1a91-4bf7-adaf-3b82f2a12b67
 </code></pre>
               
             </div>
@@ -330,10 +325,10 @@ the Keycloak GUI, and they are typically GUIDs:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../keycloak_ldap_user_attribute_mapper/" class="btn btn-neutral float-right" title="keycloak_ldap_user_attribute_mapper">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../keycloak_ldap_msad_user_account_control_mapper/" class="btn btn-neutral float-right" title="keycloak_ldap_msad_user_account_control_mapper">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../keycloak_ldap_hardcoded_role_mapper/" class="btn btn-neutral" title="keycloak_ldap_hardcoded_role_mapper"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../keycloak_ldap_group_mapper/" class="btn btn-neutral" title="keycloak_ldap_group_mapper"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -361,10 +356,10 @@ the Keycloak GUI, and they are typically GUIDs:</p>
           <a href="https://github.com/mrparkers/terraform-provider-keycloak/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../keycloak_ldap_hardcoded_role_mapper/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../keycloak_ldap_group_mapper/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../keycloak_ldap_user_attribute_mapper/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../keycloak_ldap_msad_user_account_control_mapper/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

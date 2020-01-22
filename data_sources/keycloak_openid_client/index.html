@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>keycloak_realm - Terraform Provider: Keycloak</title>
+  <title>keycloak_openid_client - Terraform Provider: Keycloak</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "keycloak_realm";
-    var mkdocs_page_input_path = "data_sources/keycloak_realm.md";
-    var mkdocs_page_url = "/terraform-provider-keycloak/data_sources/keycloak_realm/";
+    var mkdocs_page_name = "keycloak_openid_client";
+    var mkdocs_page_input_path = "data_sources/keycloak_openid_client.md";
+    var mkdocs_page_url = "/terraform-provider-keycloak/data_sources/keycloak_openid_client/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
@@ -62,16 +62,12 @@
                     
     <a class="" href="../keycloak_group/">keycloak_group</a>
                 </li>
-                <li class="">
-                    
-    <a class="" href="../keycloak_openid_client/">keycloak_openid_client</a>
-                </li>
                 <li class=" current">
                     
-    <a class="current" href="./">keycloak_realm</a>
+    <a class="current" href="./">keycloak_openid_client</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#keycloak_realm-data-source">keycloak_realm data source</a></li>
+    <li class="toctree-l3"><a href="#keycloak_openid_client-data-source">keycloak_openid_client data source</a></li>
     
         <ul>
         
@@ -85,6 +81,10 @@
     
 
     </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../keycloak_realm/">keycloak_realm</a>
                 </li>
                 <li class="">
                     
@@ -258,10 +258,10 @@
         
       
     
-    <li>keycloak_realm</li>
+    <li>keycloak_openid_client</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/mrparkers/terraform-provider-keycloak/edit/master/docs/data_sources/keycloak_realm.md"
+        <a href="https://github.com/mrparkers/terraform-provider-keycloak/edit/master/docs/data_sources/keycloak_openid_client.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -271,30 +271,30 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="keycloak_realm-data-source">keycloak_realm data source</h1>
-<p>This data source can be used to fetch properties of a Keycloak realm for
-usage with other resources.</p>
+                <h1 id="keycloak_openid_client-data-source">keycloak_openid_client data source</h1>
+<p>This data source can be used to fetch properties of a Keycloak OpenID client for usage with other resources.</p>
 <h3 id="example-usage">Example Usage</h3>
-<pre><code class="hcl">data &quot;keycloak_realm&quot; &quot;realm&quot; {
-    realm   = &quot;my-realm&quot;
+<pre><code class="hcl">data &quot;keycloak_openid_client&quot; &quot;realm_management&quot; {
+  realm_id = &quot;my-realm&quot;
+  client_id = &quot;realm-management&quot;
 }
 
 # use the data source
-
-resource &quot;keycloak_role&quot; &quot;group&quot; {
-    realm_id = &quot;${data.keycloak_realm.id}&quot;
-    name     = &quot;group&quot;
+data &quot;keycloak_role&quot; &quot;admin&quot; {
+  realm_id = &quot;my-realm&quot;
+  client_id = data.keycloak_openid_client.realm_management.id
+  name = &quot;realm-admin&quot;
 }
-
 </code></pre>
 
 <h3 id="argument-reference">Argument Reference</h3>
 <p>The following arguments are supported:</p>
 <ul>
-<li><code>realm</code> - (Required) The realm name.</li>
+<li><code>realm_id</code> - (Required) The realm id.</li>
+<li><code>client_id</code> - (Required) The client id.</li>
 </ul>
 <h3 id="attributes-reference">Attributes Reference</h3>
-<p>See the docs for the <a href="../../resources/keycloak_realm/"><code>keycloak_realm</code> resource</a> for details on the exported attributes.</p>
+<p>See the docs for the <a href="../../resources/keycloak_openid_client/"><code>keycloak_openid_client</code> resource</a> for details on the exported attributes.</p>
               
             </div>
           </div>
@@ -302,10 +302,10 @@ resource &quot;keycloak_role&quot; &quot;group&quot; {
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../keycloak_realm_keys/" class="btn btn-neutral float-right" title="keycloak_realm_keys">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../keycloak_realm/" class="btn btn-neutral float-right" title="keycloak_realm">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../keycloak_openid_client/" class="btn btn-neutral" title="keycloak_openid_client"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../keycloak_group/" class="btn btn-neutral" title="keycloak_group"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -333,10 +333,10 @@ resource &quot;keycloak_role&quot; &quot;group&quot; {
           <a href="https://github.com/mrparkers/terraform-provider-keycloak/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../keycloak_openid_client/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../keycloak_group/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../keycloak_realm_keys/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../keycloak_realm/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

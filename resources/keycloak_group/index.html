@@ -60,6 +60,14 @@
     <ul class="subnav">
                 <li class="">
                     
+    <a class="" href="../../data_sources/keycloak_group/">keycloak_group</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../../data_sources/keycloak_openid_client/">keycloak_openid_client</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../../data_sources/keycloak_realm/">keycloak_realm</a>
                 </li>
                 <li class="">
@@ -201,6 +209,10 @@
                 </li>
                 <li class="">
                     
+    <a class="" href="../keycloak_ldap_hardcoded_role_mapper/">keycloak_ldap_hardcoded_role_mapper</a>
+                </li>
+                <li class="">
+                    
     <a class="" href="../keycloak_ldap_msad_user_account_control_mapper/">keycloak_ldap_msad_user_account_control_mapper</a>
                 </li>
                 <li class="">
@@ -210,6 +222,14 @@
                 <li class="">
                     
     <a class="" href="../keycloak_custom_user_federation/">keycloak_custom_user_federation</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../keycloak_saml_identity_provider/">keycloak_saml_identity_provider</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../keycloak_attribute_importer_identity_provider_mapper/">keycloak_attribute_importer_identity_provider_mapper</a>
                 </li>
     </ul>
 	    </li>
@@ -258,6 +278,7 @@
 <p>Groups provide a logical wrapping for users within Keycloak. Users within a
 group can share attributes and roles, and group membership can be mapped
 to a claim.</p>
+<p>Attributes can also be defined on Groups.</p>
 <p>Groups can also be federated from external data sources, such as LDAP or Active Directory.
 This resource <strong>should not</strong> be used to manage groups that were created this way.</p>
 <h3 id="example-usage">Example Usage</h3>
@@ -276,6 +297,16 @@ resource &quot;keycloak_group&quot; &quot;child_group&quot; {
     parent_id = &quot;${keycloak_group.parent_group.id}&quot;
     name      = &quot;child-group&quot;
 }
+
+resource &quot;keycloak_group&quot; &quot;child_group_with_optional_attributes&quot; {
+    realm_id  = &quot;${keycloak_realm.realm.id}&quot;
+    parent_id = &quot;${keycloak_group.parent_group.id}&quot;
+    name      = &quot;child-group-with-optional-attributes&quot;
+    attributes = {
+        &quot;key1&quot; = &quot;value1&quot;
+        &quot;key2&quot; = &quot;value2&quot;
+    }
+}
 </code></pre>
 
 <h3 id="argument-reference">Argument Reference</h3>
@@ -284,6 +315,7 @@ resource &quot;keycloak_group&quot; &quot;child_group&quot; {
 <li><code>realm_id</code> - (Required) The realm this group exists in.</li>
 <li><code>parent_id</code> - (Optional) The ID of this group's parent. If omitted, this group will be defined at the root level.</li>
 <li><code>name</code> - (Required) The name of the group.</li>
+<li><code>attributes</code> - (Optional) A dict of key/value pairs to set as custom attributes for the group.</li>
 </ul>
 <h3 id="attributes-reference">Attributes Reference</h3>
 <p>In addition to the arguments listed above, the following computed attributes are exported:</p>

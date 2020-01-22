@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>keycloak_ldap_msad_user_account_control_mapper - Terraform Provider: Keycloak</title>
+  <title>keycloak_saml_identity_provider - Terraform Provider: Keycloak</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -18,9 +18,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "keycloak_ldap_msad_user_account_control_mapper";
-    var mkdocs_page_input_path = "resources/keycloak_ldap_msad_user_account_control_mapper.md";
-    var mkdocs_page_url = "/terraform-provider-keycloak/resources/keycloak_ldap_msad_user_account_control_mapper/";
+    var mkdocs_page_name = "keycloak_saml_identity_provider";
+    var mkdocs_page_input_path = "resources/keycloak_saml_identity_provider.md";
+    var mkdocs_page_url = "/terraform-provider-keycloak/resources/keycloak_saml_identity_provider/";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js" defer></script>
@@ -193,12 +193,24 @@
                     
     <a class="" href="../keycloak_ldap_hardcoded_role_mapper/">keycloak_ldap_hardcoded_role_mapper</a>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../keycloak_ldap_msad_user_account_control_mapper/">keycloak_ldap_msad_user_account_control_mapper</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../keycloak_ldap_user_attribute_mapper/">keycloak_ldap_user_attribute_mapper</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../keycloak_custom_user_federation/">keycloak_custom_user_federation</a>
+                </li>
                 <li class=" current">
                     
-    <a class="current" href="./">keycloak_ldap_msad_user_account_control_mapper</a>
+    <a class="current" href="./">keycloak_saml_identity_provider</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#keycloak_ldap_msad_user_account_control_mapper">keycloak_ldap_msad_user_account_control_mapper</a></li>
+    <li class="toctree-l3"><a href="#keycloak_saml_identity_provider">keycloak_saml_identity_provider</a></li>
     
         <ul>
         
@@ -212,18 +224,6 @@
     
 
     </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../keycloak_ldap_user_attribute_mapper/">keycloak_ldap_user_attribute_mapper</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../keycloak_custom_user_federation/">keycloak_custom_user_federation</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../keycloak_saml_identity_provider/">keycloak_saml_identity_provider</a>
                 </li>
                 <li class="">
                     
@@ -258,10 +258,10 @@
         
       
     
-    <li>keycloak_ldap_msad_user_account_control_mapper</li>
+    <li>keycloak_saml_identity_provider</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/mrparkers/terraform-provider-keycloak/edit/master/docs/resources/keycloak_ldap_msad_user_account_control_mapper.md"
+        <a href="https://github.com/mrparkers/terraform-provider-keycloak/edit/master/docs/resources/keycloak_saml_identity_provider.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
@@ -271,57 +271,62 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="keycloak_ldap_msad_user_account_control_mapper">keycloak_ldap_msad_user_account_control_mapper</h1>
-<p>Allows for creating and managing MSAD user account control mappers for Keycloak
-users federated via LDAP.</p>
-<p>The MSAD (Microsoft Active Directory) user account control mapper is specific
-to LDAP user federation providers that are pulling from AD, and it can propagate
-AD user state to Keycloak in order to enforce settings like expired passwords
-or disabled accounts.</p>
+                <h1 id="keycloak_saml_identity_provider">keycloak_saml_identity_provider</h1>
+<p>Allows to create and manage SAML Identity Providers within Keycloak.</p>
+<p>SAML (Security Assertion Markup Language) identity providers allows to authenticate through a third-party system, using SAML standard.</p>
 <h3 id="example-usage">Example Usage</h3>
-<pre><code class="hcl">resource &quot;keycloak_realm&quot; &quot;realm&quot; {
-    realm   = &quot;test&quot;
-    enabled = true
-}
-
-resource &quot;keycloak_ldap_user_federation&quot; &quot;ldap_user_federation&quot; {
-    name                    = &quot;ad&quot;
-    realm_id                = &quot;${keycloak_realm.realm.id}&quot;
-
-    username_ldap_attribute = &quot;cn&quot;
-    rdn_ldap_attribute      = &quot;cn&quot;
-    uuid_ldap_attribute     = &quot;objectGUID&quot;
-    user_object_classes     = [
-        &quot;person&quot;,
-        &quot;organizationalPerson&quot;,
-        &quot;user&quot;
-    ]
-    connection_url          = &quot;ldap://my-ad-server&quot;
-    users_dn                = &quot;dc=example,dc=org&quot;
-    bind_dn                 = &quot;cn=admin,dc=example,dc=org&quot;
-    bind_credential         = &quot;admin&quot;
-}
-
-resource &quot;keycloak_ldap_msad_user_account_control_mapper&quot; &quot;msad_user_account_control_mapper&quot; {
-    realm_id                 = &quot;${keycloak_realm.realm.id}&quot;
-    ldap_user_federation_id  = &quot;${keycloak_ldap_user_federation.ldap_user_federation.id}&quot;
-    name                     = &quot;msad-user-account-control-mapper&quot;
+<pre><code class="hcl">resource &quot;keycloak_saml_identity_provider&quot; &quot;realm_identity_provider&quot; {
+  realm = &quot;my-realm&quot;
+  alias = &quot;my-idp&quot;
+  single_sign_on_service_url = &quot;https://domain.com/adfs/ls/&quot;
+  single_logout_service_url = &quot;https://domain.com/adfs/ls/?wa=wsignout1.0&quot;
+  backchannel_supported = true
+  post_binding_response = true
+  post_binding_logout = true
+  post_binding_authn_request = true
+  store_token = false
+  trust_email = true
+  force_authn = true
 }
 </code></pre>
 
 <h3 id="argument-reference">Argument Reference</h3>
 <p>The following arguments are supported:</p>
 <ul>
-<li><code>realm_id</code> - (Required) The realm that this LDAP mapper will exist in.</li>
-<li><code>ldap_user_federation_id</code> - (Required) The ID of the LDAP user federation provider to attach this mapper to.</li>
-<li><code>name</code> - (Required) Display name of this mapper when displayed in the console.</li>
-<li><code>ldap_password_policy_hints_enabled</code> - (Optional) When <code>true</code>, advanced password policies, such as password hints and previous password history will be used when writing new passwords to AD. Defaults to <code>false</code>.</li>
+<li><code>realm</code> - (Required) The name of the realm. This is unique across Keycloak.</li>
+<li><code>alias</code> - (Optional) The uniq name of identity provider.</li>
+<li><code>enabled</code> - (Optional) When false, users and clients will not be able to access this realm. Defaults to <code>true</code>.</li>
+<li><code>display_name</code> - (Optional) The display name for the realm that is shown when logging in to the admin console.</li>
+<li><code>store_token</code> - (Optional) Enable/disable if tokens must be stored after authenticating users. Defaults to <code>true</code>.</li>
+<li><code>add_read_token_role_on_create</code> - (Optional) Enable/disable if new users can read any stored tokens. This assigns the broker.read-token role. Defaults to <code>false</code>.</li>
+<li><code>trust_email</code> - (Optional) If enabled then email provided by this provider is not verified even if verification is enabled for the realm. Defaults to <code>false</code>.</li>
+<li><code>link_only</code> - (Optional) If true, users cannot log in through this provider. They can only link to this provider. This is useful if you don't want to allow login from the provider, but want to integrate with a provider. Defaults to <code>false</code>.</li>
+<li><code>hide_on_login_page</code> - (Optional) If hidden, then login with this provider is possible only if requested explicitly, e.g. using the 'kc_idp_hint' parameter.</li>
+<li><code>first_broker_login_flow_alias</code> - (Optional) Alias of authentication flow, which is triggered after first login with this identity provider. Term 'First Login' means that there is not yet existing Keycloak account linked with the authenticated identity provider account. Defaults to <code>first broker login</code>.</li>
+<li><code>post_broker_login_flow_alias</code> - (Optional) Alias of authentication flow, which is triggered after each login with this identity provider. Useful if you want additional verification of each user authenticated with this identity provider (for example OTP). Leave this empty if you don't want any additional authenticators to be triggered after login with this identity provider. Also note, that authenticator implementations must assume that user is already set in ClientSession as identity provider already set it. Defaults to empty.</li>
+<li><code>authenticate_by_default</code> - (Optional) Authenticate users by default. Defaults to <code>false</code>.</li>
+</ul>
+<h4 id="saml-configuration">SAML Configuration</h4>
+<ul>
+<li><code>single_sign_on_service_url</code> - (Optional) The Url that must be used to send authentication requests (SAML AuthnRequest).</li>
+<li><code>single_logout_service_url</code> - (Optional) The Url that must be used to send logout requests.</li>
+<li><code>backchannel_supported</code> - (Optional) Does the external IDP support back-channel logout ?.</li>
+<li><code>name_id_policy_format</code> - (Optional) Specifies the URI reference corresponding to a name identifier format. Defaults to empty.</li>
+<li><code>post_binding_response</code> - (Optional) Indicates whether to respond to requests using HTTP-POST binding. If false, HTTP-REDIRECT binding will be used..</li>
+<li><code>post_binding_authn_request</code> - (Optional) Indicates whether the AuthnRequest must be sent using HTTP-POST binding. If false, HTTP-REDIRECT binding will be used.</li>
+<li><code>post_binding_logout</code> - (Optional) Indicates whether to respond to requests using HTTP-POST binding. If false, HTTP-REDIRECT binding will be used.</li>
+<li><code>want_assertions_signed</code> - (Optional) Indicates whether this service provider expects a signed Assertion.</li>
+<li><code>want_assertions_encrypted</code> - (Optional) Indicates whether this service provider expects an encrypted Assertion.</li>
+<li><code>force_authn</code> - (Optional) Indicates whether the identity provider must authenticate the presenter directly rather than rely on a previous security context.</li>
+<li><code>validate_signature</code> - (Optional) Enable/disable signature validation of SAML responses.</li>
+<li><code>signing_certificate</code> - (Optional) Signing Certificate.</li>
+<li><code>signature_algorithm</code> - (Optional) Signing Algorithm. Defaults to empty.</li>
+<li><code>xml_sign_key_info_key_name_transformer</code> - (Optional) Sign Key Transformer. Defaults to empty.</li>
 </ul>
 <h3 id="import">Import</h3>
-<p>LDAP mappers can be imported using the format <code>{{realm_id}}/{{ldap_user_federation_id}}/{{ldap_mapper_id}}</code>.
-The ID of the LDAP user federation provider and the mapper can be found within
-the Keycloak GUI, and they are typically GUIDs:</p>
-<pre><code class="bash">$ terraform import keycloak_ldap_msad_user_account_control_mapper.msad_user_account_control_mapper my-realm/af2a6ca3-e4d7-49c3-b08b-1b3c70b4b860/3d923ece-1a91-4bf7-adaf-3b82f2a12b67
+<p>Identity providers can be imported using the format <code>{{realm_id}}/{{idp_alias}}</code>, where <code>idp_alias</code> is the identity provider alias.</p>
+<p>Example:</p>
+<pre><code class="bash">$ terraform import keycloak_saml_identity_provider.realm_identity_provider my-realm/my-idp
 </code></pre>
               
             </div>
@@ -330,10 +335,10 @@ the Keycloak GUI, and they are typically GUIDs:</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../keycloak_ldap_user_attribute_mapper/" class="btn btn-neutral float-right" title="keycloak_ldap_user_attribute_mapper">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../keycloak_attribute_importer_identity_provider_mapper/" class="btn btn-neutral float-right" title="keycloak_attribute_importer_identity_provider_mapper">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../keycloak_ldap_hardcoded_role_mapper/" class="btn btn-neutral" title="keycloak_ldap_hardcoded_role_mapper"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../keycloak_custom_user_federation/" class="btn btn-neutral" title="keycloak_custom_user_federation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -361,10 +366,10 @@ the Keycloak GUI, and they are typically GUIDs:</p>
           <a href="https://github.com/mrparkers/terraform-provider-keycloak/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href="../keycloak_ldap_hardcoded_role_mapper/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../keycloak_custom_user_federation/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../keycloak_ldap_user_attribute_mapper/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../keycloak_attribute_importer_identity_provider_mapper/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
